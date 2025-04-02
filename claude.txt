@@ -1,0 +1,15 @@
+Perfeito, agora mude totalmente o projeto agora para ser um de desenvolvimento de software.
+
+Fazer um laboratorio para um software *engineer, tera secoes de suporte, conteudos de linguagens de programacao e frameworks como Nestjs, express, fastify.*
+colocar mais de 70 exercicios de programacao para cada tecnologia.
+40 projetos para cada tecnologia.
+Colocar conteudos que falam sobre tecnologias, diferencas entre backend, frontend, full stack, devops.
+Colocar exemplos de codigos e separar por niveis.
+
+Adicionar rotas de inicio, laboratorio, roadmap, codigos, pratica, scripts, vagas(vagas para cada area da tecnoligia), sobre
+
+Colocar uma seção que mostre o que cada nivel em desenvolvimento de software requer de conhecimento, tipo: Iniciante, Estagiário, Junior, Pleno, Sênior, Staff, Especialista
+
+Colocar uma outra secao onde o cliente insere as habilidades dele e ja mostra em qual nivel ele se encontra
+
+Deixar uma interface ainda mais profissional e efciente fazendo de forma bem complexa
