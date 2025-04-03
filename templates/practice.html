@@ -2,6 +2,211 @@
 
 {% block title %}Prática e Exercícios - CodeLab{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Estilos para o modal de exercício/projeto */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal-content {
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-xl);
+        width: 90%;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+    }
+    
+    .modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        padding: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+    
+    .close-modal {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--gray-color);
+    }
+    
+    .close-modal:hover {
+        color: var(--dark-color);
+    }
+    
+    .timer {
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .timer i {
+        margin-right: 0.5rem;
+    }
+    
+    .exercise-steps {
+        margin-top: 1.5rem;
+        border-left: 2px solid var(--primary-color);
+        padding-left: 1.5rem;
+    }
+    
+    .step {
+        margin-bottom: 1.5rem;
+    }
+    
+    .step-number {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2rem;
+        margin-right: 0.5rem;
+    }
+    
+    .success-message {
+        display: none;
+        background-color: #d1fae5;
+        border-left: 4px solid #10b981;
+        padding: 1rem;
+        margin-top: 1.5rem;
+        border-radius: var(--border-radius);
+    }
+    
+    .tab-item.active {
+        border-bottom-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+    }
+    
+    .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid var(--primary-color);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Status de conclusão */
+    .completion-status {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        background-color: var(--light-color);
+        padding: 1rem;
+        border-radius: var(--border-radius);
+    }
+    
+    .status-item {
+        text-align: center;
+    }
+    
+    .status-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    
+    .status-label {
+        color: var(--gray-color);
+        font-size: 0.875rem;
+    }
+    
+    /* Tooltips */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: var(--dark-color);
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    /* Tags para filtro */
+    .tag-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .tag {
+        padding: 0.25rem 0.75rem;
+        background-color: var(--light-color);
+        border-radius: 999px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .tag:hover, .tag.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Header Section -->
 <section class="section-sm" style="background-color: var(--light-color);">
@@ -16,6 +221,26 @@
 <!-- Practice Content Section -->
 <section class="section">
     <div class="container">
+        <!-- Status de Conclusão -->
+        <div class="completion-status">
+            <div class="status-item">
+                <div class="status-number">0</div>
+                <div class="status-label">Exercícios Concluídos</div>
+            </div>
+            <div class="status-item">
+                <div class="status-number">0</div>
+                <div class="status-label">Projetos Iniciados</div>
+            </div>
+            <div class="status-item">
+                <div class="status-number">0%</div>
+                <div class="status-label">Progresso Total</div>
+            </div>
+            <div class="status-item">
+                <div class="status-number">0</div>
+                <div class="status-label">Pontos de Experiência</div>
+            </div>
+        </div>
+        
         <!-- Practice Filters -->
         <div class="card mb-4">
             <div class="card-body">
@@ -23,7 +248,7 @@
                     <div>
                         <h3 class="mb-3">Selecione a Tecnologia</h3>
                         <div class="form-group">
-                            <select class="form-select tech-selector">
+                            <select class="form-select tech-selector" id="tech-selector">
                                 {% for tech in technologies %}
                                 <option value="{{ tech.name }}">{{ tech.name }} ({{ tech.type }})</option>
                                 {% endfor %}
@@ -34,13 +259,25 @@
                     <div id="level-selector-container">
                         <h3 class="mb-3">Selecione o Nível</h3>
                         <div class="form-group">
-                            <select class="form-select level-selector">
+                            <select class="form-select level-selector" id="level-selector">
                                 <option value="Básico">Básico</option>
                                 <option value="Intermediário">Intermediário</option>
                                 <option value="Avançado">Avançado</option>
                             </select>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Tags para filtragem adicional (somente visual) -->
+                <div class="tag-filter mt-4" id="tag-filter">
+                    <div class="tag active" data-tag="all">Todos</div>
+                    <div class="tag" data-tag="api">API</div>
+                    <div class="tag" data-tag="auth">Autenticação</div>
+                    <div class="tag" data-tag="crud">CRUD</div>
+                    <div class="tag" data-tag="performance">Performance</div>
+                    <div class="tag" data-tag="test">Testes</div>
+                    <div class="tag" data-tag="ui">Interface</div>
+                    <div class="tag" data-tag="security">Segurança</div>
                 </div>
             </div>
         </div>
@@ -55,8 +292,8 @@
             <!-- Exercises Tab -->
             <div id="exercises-tab" class="tab-content active">
                 <div id="exercises-container">
-                    <div class="text-center">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <div class="loader-container">
+                        <div class="loader"></div>
                         <p>Carregando exercícios...</p>
                     </div>
                 </div>
@@ -65,8 +302,8 @@
             <!-- Projects Tab -->
             <div id="projects-tab" class="tab-content">
                 <div id="projects-container">
-                    <div class="text-center">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <div class="loader-container">
+                        <div class="loader"></div>
                         <p>Carregando projetos...</p>
                     </div>
                 </div>
@@ -74,6 +311,154 @@
         </div>
     </div>
 </section>
+
+<!-- Exercise Modal -->
+<div class="modal-overlay" id="exercise-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="exercise-title">Título do Exercício</h3>
+            <span class="close-modal" id="close-exercise-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="timer">
+                <i class="far fa-clock"></i>
+                <span id="exercise-time">Tempo estimado: 2 horas</span>
+            </div>
+            
+            <p id="exercise-description">Descrição do exercício...</p>
+            
+            <div class="exercise-steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Entenda o problema</strong>
+                    <p>Leia atentamente o enunciado para compreender o que é solicitado.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Planeje sua solução</strong>
+                    <p>Antes de começar a codificar, pense na estrutura e nos passos necessários.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Implemente o código</strong>
+                    <p>Desenvolva a solução de acordo com os requisitos.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Teste sua solução</strong>
+                    <p>Verifique se sua implementação funciona corretamente.</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Refine e otimize</strong>
+                    <p>Melhore seu código, simplifique e otimize quando possível.</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h4>Dicas:</h4>
+                <ul id="exercise-tips">
+                    <li>Divida o problema em partes menores</li>
+                    <li>Utilize os recursos da documentação oficial</li>
+                    <li>Considere as boas práticas da tecnologia</li>
+                </ul>
+            </div>
+            
+            <div class="success-message" id="success-message">
+                <h4><i class="fas fa-check-circle mr-2"></i> Exercício concluído!</h4>
+                <p>Muito bem! Você ganhou <strong>10 pontos de experiência</strong>.</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-primary" id="exercise-hint-btn">Mostrar Dica</button>
+            <button class="btn btn-primary" id="exercise-complete-btn">Marcar como Concluído</button>
+        </div>
+    </div>
+</div>
+
+<!-- Project Modal -->
+<div class="modal-overlay" id="project-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="project-title">Título do Projeto</h3>
+            <span class="close-modal" id="close-project-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="timer">
+                <i class="far fa-clock"></i>
+                <span id="project-time">Tempo estimado: 15 horas</span>
+            </div>
+            
+            <p id="project-description">Descrição do projeto...</p>
+            
+            <div class="mt-4">
+                <h4>Características:</h4>
+                <ul id="project-features">
+                    <li>Característica 1</li>
+                    <li>Característica 2</li>
+                    <li>Característica 3</li>
+                </ul>
+            </div>
+            
+            <div class="mt-4">
+                <h4>Etapas Sugeridas:</h4>
+                <div class="exercise-steps">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>Planejamento</strong>
+                        <p>Defina o escopo, arquitetura e ferramentas a serem utilizadas.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>Configuração do Ambiente</strong>
+                        <p>Configure o ambiente de desenvolvimento com as tecnologias necessárias.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>Implementação do MVP</strong>
+                        <p>Desenvolva a versão mínima viável com as funcionalidades essenciais.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <strong>Refinamento e Testes</strong>
+                        <p>Melhore a implementação, adicione recursos extras e realize testes.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">5</span>
+                        <strong>Documentação</strong>
+                        <p>Documente o projeto, incluindo instruções de instalação e uso.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h4>Recursos Recomendados:</h4>
+                <ul id="project-resources">
+                    <li><a href="#" target="_blank">Documentação oficial</a></li>
+                    <li>Exemplos de códigos relacionados</li>
+                    <li>Bibliotecas e ferramentas úteis</li>
+                </ul>
+            </div>
+            
+            <div class="success-message" id="project-success-message">
+                <h4><i class="fas fa-check-circle mr-2"></i> Projeto iniciado!</h4>
+                <p>Este projeto foi adicionado à sua lista de projetos em andamento.</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-primary" id="project-resources-btn">Recursos Adicionais</button>
+            <button class="btn btn-primary" id="project-start-btn">Iniciar Projeto</button>
+        </div>
+    </div>
+</div>
 
 <!-- Practice Tips Section -->
 <section class="section" style="background-color: var(--light-color);">
@@ -300,37 +685,1248 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Atualiza a exibição quando a aba "Projetos" é clicada
-        const projectsTab = document.querySelector('[data-target="projects-tab"]');
-        if (projectsTab) {
-            projectsTab.addEventListener('click', function() {
-                const techSelector = document.querySelector('.tech-selector');
-                // Oculta o seletor de nível quando estiver na aba de projetos
-                document.getElementById('level-selector-container').style.display = 'none';
-                // Carrega os projetos
-                loadProjects(techSelector.value);
+        // Elementos DOM
+        const exercisesContainer = document.getElementById('exercises-container');
+        const projectsContainer = document.getElementById('projects-container');
+        const techSelector = document.getElementById('tech-selector');
+        const levelSelector = document.getElementById('level-selector');
+        const exerciseModal = document.getElementById('exercise-modal');
+        const projectModal = document.getElementById('project-modal');
+        const closeExerciseModal = document.getElementById('close-exercise-modal');
+        const closeProjectModal = document.getElementById('close-project-modal');
+        
+        // Estado do aplicativo
+        let exercises = [];
+        let projects = [];
+        let completedExercises = [];
+        let activeProjects = [];
+        let stats = {
+            completedExercises: 0,
+            activeProjects: 0,
+            progress: 0,
+            experiencePoints: 0
+        };
+        
+        // Inicialização
+        loadUserProgress();
+        updateStats();
+        
+        // Carregar progresso do usuário
+        function loadUserProgress() {
+            // Simulando carregamento de progresso do localStorage
+            const storedCompletedExercises = localStorage.getItem('completedExercises');
+            const storedActiveProjects = localStorage.getItem('activeProjects');
+            const storedStats = localStorage.getItem('userStats');
+            
+            if (storedCompletedExercises) {
+                completedExercises = JSON.parse(storedCompletedExercises);
+            }
+            
+            if (storedActiveProjects) {
+                activeProjects = JSON.parse(storedActiveProjects);
+            }
+            
+            if (storedStats) {
+                stats = JSON.parse(storedStats);
+            }
+        }
+        
+        // Salvar progresso do usuário
+        function saveUserProgress() {
+            localStorage.setItem('completedExercises', JSON.stringify(completedExercises));
+            localStorage.setItem('activeProjects', JSON.stringify(activeProjects));
+            localStorage.setItem('userStats', JSON.stringify(stats));
+        }
+        
+        // Atualizar estatísticas
+        function updateStats() {
+            const statusItems = document.querySelectorAll('.status-number');
+            statusItems[0].textContent = stats.completedExercises;
+            statusItems[1].textContent = stats.activeProjects;
+            statusItems[2].textContent = stats.progress + '%';
+            statusItems[3].textContent = stats.experiencePoints;
+        }
+        
+        // Abrir modal de exercício
+        function openExerciseModal(exercise) {
+            // Preencher informações do exercício no modal
+            document.getElementById('exercise-title').textContent = exercise.title;
+            document.getElementById('exercise-description').textContent = exercise.description;
+            document.getElementById('exercise-time').textContent = `Tempo estimado: ${exercise.estimated_time}`;
+            
+            // Gerar dicas específicas conforme a tecnologia e nível
+            const tips = document.getElementById('exercise-tips');
+            tips.innerHTML = '';
+            
+            const tipsByLevel = {
+                    'Básico': [
+                        `Consulte a documentação oficial de ${techSelector.value} para entender os conceitos básicos`,
+                        `Comece com exemplos simples antes de avançar para o exercício completo`,
+                        `Não hesite em usar recursos de debug para entender o fluxo do código`,
+                        `Pratique a sintaxe básica em um ambiente de sandbox antes de implementar a solução`
+                    ],
+                    'Intermediário': [
+                        `Aplique os padrões de design comuns em ${techSelector.value}`,
+                        `Considere a organização do código e módulos para facilitar a manutenção`,
+                        `Pesquise sobre bibliotecas que podem ajudar com funcionalidades específicas`,
+                        `Pense na escalabilidade da sua solução`
+                    ],
+                    'Avançado': [
+                        `Otimize sua solução considerando performance e uso de recursos`,
+                        `Implemente testes automatizados para validar a solução`,
+                        `Considere cenários edge-case e tratamento de erros robusto`,
+                        `Aplique padrões arquiteturais avançados específicos para ${techSelector.value}`
+                    ]
+                };
+                
+                const levelTips = tipsByLevel[exercise.difficulty] || tipsByLevel['Básico'];
+                
+                levelTips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    tips.appendChild(li);
+                });
+                
+                // Verificar se o exercício já foi concluído
+                const successMessage = document.getElementById('success-message');
+                successMessage.style.display = 'none';
+                
+                if (isExerciseCompleted(exercise.id)) {
+                    document.getElementById('exercise-complete-btn').textContent = 'Exercício Concluído';
+                    document.getElementById('exercise-complete-btn').disabled = true;
+                    successMessage.style.display = 'block';
+                } else {
+                    document.getElementById('exercise-complete-btn').textContent = 'Marcar como Concluído';
+                    document.getElementById('exercise-complete-btn').disabled = false;
+                }
+                
+                // Mostrar o modal
+                exerciseModal.style.display = 'flex';
+                
+                // Adicionar evento ao botão de conclusão
+                document.getElementById('exercise-complete-btn').onclick = function() {
+                    completeExercise(exercise);
+                };
+                
+                // Adicionar evento ao botão de dica
+                document.getElementById('exercise-hint-btn').onclick = function() {
+                    showExerciseHint(exercise);
+                };
+            }
+            
+            // Abrir modal de projeto
+            function openProjectModal(project) {
+                // Preencher informações do projeto no modal
+                document.getElementById('project-title').textContent = project.title;
+                document.getElementById('project-description').textContent = project.description;
+                document.getElementById('project-time').textContent = `Tempo estimado: ${project.estimated_time}`;
+                
+                // Mostrar características do projeto
+                const featuresElement = document.getElementById('project-features');
+                featuresElement.innerHTML = '';
+                
+                project.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featuresElement.appendChild(li);
+                });
+                
+                // Gerar recursos específicos conforme a tecnologia e nível
+                const resourcesElement = document.getElementById('project-resources');
+                resourcesElement.innerHTML = '';
+                
+                const resourcesByLevel = {
+                    'Básico': [
+                        { text: `Documentação oficial de ${techSelector.value}`, link: '#' },
+                        { text: `Tutoriais para iniciantes em ${techSelector.value}`, link: '#' },
+                        { text: 'Exemplos de código básicos no CodeLab', link: '/codes' },
+                        { text: 'Comunidade de suporte para dúvidas', link: '#' }
+                    ],
+                    'Intermediário': [
+                        { text: `Guia de boas práticas para ${techSelector.value}`, link: '#' },
+                        { text: 'Padrões de design recomendados', link: '#' },
+                        { text: 'Exemplos de projetos similares', link: '#' },
+                        { text: 'Ferramentas de desenvolvimento recomendadas', link: '#' }
+                    ],
+                    'Avançado': [
+                        { text: 'Artigos sobre arquitetura escalável', link: '#' },
+                        { text: 'Técnicas de otimização e performance', link: '#' },
+                        { text: 'Implementação de CI/CD para o projeto', link: '#' },
+                        { text: 'Monitoramento e telemetria', link: '#' }
+                    ]
+                };
+                
+                const levelResources = resourcesByLevel[project.difficulty] || resourcesByLevel['Básico'];
+                
+                levelResources.forEach(resource => {
+                    const li = document.createElement('li');
+                    if (resource.link) {
+                        const a = document.createElement('a');
+                        a.href = resource.link;
+                        a.textContent = resource.text;
+                        a.target = '_blank';
+                        li.appendChild(a);
+                    } else {
+                        li.textContent = resource.text;
+                    }
+                    resourcesElement.appendChild(li);
+                });
+                
+                // Verificar se o projeto já está ativo
+                const successMessage = document.getElementById('project-success-message');
+                successMessage.style.display = 'none';
+                
+                if (isProjectActive(project.id)) {
+                    document.getElementById('project-start-btn').textContent = 'Projeto em Andamento';
+                    document.getElementById('project-start-btn').disabled = true;
+                    successMessage.style.display = 'block';
+                } else {
+                    document.getElementById('project-start-btn').textContent = 'Iniciar Projeto';
+                    document.getElementById('project-start-btn').disabled = false;
+                }
+                
+                // Mostrar o modal
+                projectModal.style.display = 'flex';
+                
+                // Adicionar evento ao botão de início
+                document.getElementById('project-start-btn').onclick = function() {
+                    startProject(project);
+                };
+                
+                // Adicionar evento ao botão de recursos adicionais
+                document.getElementById('project-resources-btn').onclick = function() {
+                    showAdditionalResources(project);
+                };
+            }
+            
+            // Marcar exercício como concluído
+            function completeExercise(exercise) {
+                if (!isExerciseCompleted(exercise.id)) {
+                    completedExercises.push(exercise.id);
+                    stats.completedExercises++;
+                    stats.experiencePoints += 10;
+                    stats.progress = Math.min(100, Math.floor((stats.completedExercises / 20) * 100));
+                    
+                    saveUserProgress();
+                    updateStats();
+                    
+                    // Mostrar mensagem de sucesso
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('exercise-complete-btn').textContent = 'Exercício Concluído';
+                    document.getElementById('exercise-complete-btn').disabled = true;
+                    
+                    // Atualizar a interface
+                    renderExercises(exercises);
+                }
+            }
+            
+            // Iniciar projeto
+            function startProject(project) {
+                if (!isProjectActive(project.id)) {
+                    activeProjects.push(project.id);
+                    stats.activeProjects++;
+                    stats.experiencePoints += 20;
+                    
+                    saveUserProgress();
+                    updateStats();
+                    
+                    // Mostrar mensagem de sucesso
+                    document.getElementById('project-success-message').style.display = 'block';
+                    document.getElementById('project-start-btn').textContent = 'Projeto em Andamento';
+                    document.getElementById('project-start-btn').disabled = true;
+                    
+                    // Atualizar a interface
+                    renderProjects(projects);
+                }
+            }
+            
+            // Verificar se exercício está concluído
+            function isExerciseCompleted(id) {
+                return completedExercises.includes(id);
+            }
+            
+            // Verificar se projeto está ativo
+            function isProjectActive(id) {
+                return activeProjects.includes(id);
+            }
+            
+            // Mostrar dica para exercício
+            function showExerciseHint(exercise) {
+                const hintsByTech = {
+                    'Node.js': 'Considere o uso de módulos nativos do Node.js para simplificar a implementação.',
+                    'Express': 'A documentação do Express tem exemplos específicos para este tipo de problema.',
+                    'NestJS': 'Os decoradores do NestJS podem ajudar a simplificar esta implementação.',
+                    'Fastify': 'Os esquemas do Fastify ajudam a validar entradas para evitar problemas.',
+                    'React': 'Considere o uso de hooks para gerenciar o estado deste componente.',
+                    'Angular': 'Os serviços do Angular são ideais para este tipo de funcionalidade.',
+                    'Vue.js': 'Os componentes Vue podem encapsular esta lógica de forma elegante.'
+                };
+                
+                const hint = hintsByTech[techSelector.value] || 'Divida o problema em partes menores para facilitar a solução.';
+                
+                // Exibir dica em um alerta customizado
+                const hintBox = document.createElement('div');
+                hintBox.className = 'alert alert-info mt-3';
+                hintBox.innerHTML = `<strong>Dica extra:</strong> ${hint}`;
+                
+                // Remover dica anterior, se existir
+                const oldHint = document.querySelector('.alert.alert-info');
+                if (oldHint) {
+                    oldHint.remove();
+                }
+                
+                // Adicionar nova dica
+                document.querySelector('.modal-body').appendChild(hintBox);
+                
+                // Atualizar o botão
+                document.getElementById('exercise-hint-btn').textContent = 'Dica Mostrada';
+                document.getElementById('exercise-hint-btn').disabled = true;
+            }
+            
+            // Mostrar recursos adicionais para projeto
+            function showAdditionalResources(project) {
+                const resourcesByTech = {
+                    'Node.js': [
+                        { text: 'Best Practices for Node.js Development', link: '#' },
+                        { text: 'Node.js Design Patterns Book', link: '#' }
+                    ],
+                    'Express': [
+                        { text: 'RESTful API Design with Express', link: '#' },
+                        { text: 'Express Security Best Practices', link: '#' }
+                    ],
+                    'NestJS': [
+                        { text: 'Enterprise Architecture with NestJS', link: '#' },
+                        { text: 'Advanced NestJS Techniques', link: '#' }
+                    ],
+                    'React': [
+                        { text: 'React Performance Optimization', link: '#' },
+                        { text: 'Advanced Component Patterns', link: '#' }
+                    ]
+                };
+                
+                const resources = resourcesByTech[techSelector.value] || [
+                    { text: 'Design Patterns in Software Engineering', link: '#' },
+                    { text: 'Clean Code Principles', link: '#' }
+                ];
+                
+                // Exibir recursos em um alerta customizado
+                const resourcesBox = document.createElement('div');
+                resourcesBox.className = 'alert alert-info mt-3';
+                resourcesBox.innerHTML = `
+                    <strong>Recursos Adicionais:</strong>
+                    <ul class="mt-2">
+                        ${resources.map(r => `<li><a href="${r.link}" target="_blank">${r.text}</a></li>`).join('')}
+                    </ul>
+                `;
+                
+                // Remover recursos anteriores, se existirem
+                const oldResources = document.querySelector('.alert.alert-info');
+                if (oldResources) {
+                    oldResources.remove();
+                }
+                
+                // Adicionar novos recursos
+                document.querySelector('.modal-body').appendChild(resourcesBox);
+                
+                // Atualizar o botão
+                document.getElementById('project-resources-btn').textContent = 'Recursos Mostrados';
+            }
+            
+            // Carregar e renderizar exercícios
+            function loadExercises(technology, level) {
+                // Mostrar loader
+                exercisesContainer.innerHTML = `
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                        <p>Carregando exercícios...</p>
+                    </div>
+                `;
+                
+                // Fazer requisição para API
+                fetch(`/api/exercises/${technology}/${level}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        exercises = data;
+                        renderExercises(exercises);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar exercícios:', error);
+                        exercisesContainer.innerHTML = `
+                            <div class="alert alert-danger">
+                                <p>Erro ao carregar exercícios. Por favor, tente novamente.</p>
+                            </div>
+                        `;
+                    });
+            }
+            
+            // Renderizar exercícios na interface
+            function renderExercises(exercises) {
+                if (exercises.length === 0) {
+                    exercisesContainer.innerHTML = `
+                        <div class="alert alert-info">
+                            <p>Nenhum exercício encontrado para esta tecnologia e nível.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '<div class="grid grid-3">';
+                
+                exercises.forEach(exercise => {
+                    const isCompleted = isExerciseCompleted(exercise.id);
+                    const statusClass = isCompleted ? 'success' : getDifficultyClass(exercise.difficulty);
+                    const statusText = isCompleted ? 'Concluído' : exercise.difficulty;
+                    const buttonText = isCompleted ? 'Ver Detalhes' : 'Iniciar';
+                    
+                    html += `
+                        <div class="card exercise-card" data-id="${exercise.id}">
+                            <div class="card-body">
+                                <span class="badge badge-${statusClass} mb-2">${statusText}</span>
+                                <h3 class="card-title">${exercise.title}</h3>
+                                <p>${exercise.description}</p>
+                                <div class="exercise-meta">
+                                    <span><i class="far fa-clock"></i> ${exercise.estimated_time}</span>
+                                    <a href="#" class="btn btn-sm btn-primary start-exercise" data-id="${exercise.id}">
+                                        ${buttonText}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                exercisesContainer.innerHTML = html;
+                
+                // Adicionar eventos aos botões de início
+                document.querySelectorAll('.start-exercise').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const id = this.getAttribute('data-id');
+                        const exercise = exercises.find(ex => ex.id === id);
+                        if (exercise) {
+                            openExerciseModal(exercise);
+                        }
+                    });
+                });
+            }
+            
+            // Carregar e renderizar projetos
+            function loadProjects(technology) {
+                // Mostrar loader
+                projectsContainer.innerHTML = `
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                        <p>Carregando projetos...</p>
+                    </div>
+                `;
+                
+                // Fazer requisição para API
+                fetch(`/api/projects/${technology}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        projects = data;
+                        renderProjects(projects);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar projetos:', error);
+                        projectsContainer.innerHTML = `
+                            <div class="alert alert-danger">
+                                <p>Erro ao carregar projetos. Por favor, tente novamente.</p>
+                            </div>
+                        `;
+                    });
+            }
+            
+            // Renderizar projetos na interface
+            function renderProjects(projects) {
+                if (projects.length === 0) {
+                    projectsContainer.innerHTML = `
+                        <div class="alert alert-info">
+                            <p>Nenhum projeto encontrado para esta tecnologia.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Agrupar projetos por nível
+                const groupedProjects = {};
+                projects.forEach(project => {
+                    if (!groupedProjects[project.difficulty]) {
+                        groupedProjects[project.difficulty] = [];
+                    }
+                    groupedProjects[project.difficulty].push(project);
+                });
+                
+                let html = '';
+                
+                // Renderizar projetos por nível
+                Object.keys(groupedProjects).forEach(level => {
+                    html += `<h2 class="mb-3 mt-4">Projetos ${level}</h2>`;
+                    html += '<div class="grid grid-3">';
+                    
+                    groupedProjects[level].forEach(project => {
+                        const isActive = isProjectActive(project.id);
+                        const statusClass = isActive ? 'success' : getDifficultyClass(project.difficulty);
+                        const statusText = isActive ? 'Em Andamento' : project.difficulty;
+                        const buttonText = isActive ? 'Ver Detalhes' : 'Iniciar';
+                        
+                        html += `
+                            <div class="card project-card" data-id="${project.id}">
+                                <div class="card-body">
+                                    <span class="badge badge-${statusClass} mb-2">${statusText}</span>
+                                    <h3 class="card-title">${project.title}</h3>
+                                    <p>${project.description}</p>
+                                    <div class="mt-3">
+                                        <h4 class="mb-2">Características:</h4>
+                                        <ul>
+                                            ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    <div class="project-meta">
+                                        <span><i class="far fa-clock"></i> ${project.estimated_time}</span>
+                                        <a href="#" class="btn btn-sm btn-primary start-project" data-id="${project.id}">
+                                            ${buttonText}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                });
+                
+                projectsContainer.innerHTML = html;
+                
+                // Adicionar eventos aos botões de início
+                document.querySelectorAll('.start-project').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const id = this.getAttribute('data-id');
+                        const project = projects.find(proj => proj.id === id);
+                        if (project) {
+                            openProjectModal(project);
+                        }
+                    });
+                });
+            }
+            
+            // Utilitário para obter classe de cores baseada na dificuldade
+            function getDifficultyClass(difficulty) {
+                switch (difficulty) {
+                    case 'Básico':
+                        return 'success';
+                    case 'Intermediário':
+                        return 'warning';
+                    case 'Avançado':
+                        return 'danger';
+                    default:
+                        return 'primary';
+                }
+            }
+            
+            // Eventos das abas
+            const tabItems = document.querySelectorAll('.tab-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabItems.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove a classe active de todas as abas
+                    tabItems.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Adiciona a classe active à aba clicada
+                    this.classList.add('active');
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                    
+                    // Ajusta o seletor de nível conforme a aba
+                    const levelContainer = document.getElementById('level-selector-container');
+                    if (target === 'projects-tab') {
+                        levelContainer.style.display = 'none';
+                        loadProjects(techSelector.value);
+                    } else {
+                        levelContainer.style.display = 'block';
+                        loadExercises(techSelector.value, levelSelector.value);
+                    }
+                });
+            });
+            
+            // Evento para selecionar tecnologia
+            techSelector.addEventListener('change', function() {
+                const activeTab = document.querySelector('.tab-item.active');
+                const targetId = activeTab.getAttribute('data-target');
+                
+                if (targetId === 'exercises-tab') {
+                    loadExercises(this.value, levelSelector.value);
+                } else {
+                    loadProjects(this.value);
+                }
+            });
+            
+            // Evento para selecionar nível
+            levelSelector.addEventListener('change', function() {
+                loadExercises(techSelector.value, this.value);
+            });
+            
+            // Eventos para fechar modais
+            closeExerciseModal.addEventListener('click', function() {
+                exerciseModal.style.display = 'none';
+            });
+            
+            closeProjectModal.addEventListener('click', function() {
+                projectModal.style.display = 'none';
+            });
+            
+            // Fechar modais ao clicar fora deles
+            window.addEventListener('click', function(event) {
+                if (event.target === exerciseModal) {
+                    exerciseModal.style.display = 'none';
+                }
+                if (event.target === projectModal) {
+                    projectModal.style.display = 'none';
+                }
+            });
+            
+            // Eventos para filtros de tags
+            const tagFilters = document.querySelectorAll('.tag');
+            tagFilters.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    tagFilters.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Implementação simplificada - apenas visual neste exemplo
+                    // Em uma implementação real, filtraria os exercícios/projetos
+                });
+            });
+            
+            // Carregar exercícios iniciais
+            loadExercises(techSelector.value, levelSelector.value);
+        });
+
+        </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elementos DOM
+        const exercisesContainer = document.getElementById('exercises-container');
+        const projectsContainer = document.getElementById('projects-container');
+        const techSelector = document.getElementById('tech-selector');
+        const levelSelector = document.getElementById('level-selector');
+        const exerciseModal = document.getElementById('exercise-modal');
+        const projectModal = document.getElementById('project-modal');
+        const closeExerciseModal = document.getElementById('close-exercise-modal');
+        const closeProjectModal = document.getElementById('close-project-modal');
+        
+        // Estado do aplicativo
+        let exercises = [];
+        let projects = [];
+        let completedExercises = [];
+        let activeProjects = [];
+        let stats = {
+            completedExercises: 0,
+            activeProjects: 0,
+            progress: 0,
+            experiencePoints: 0
+        };
+        
+        // Inicialização
+        loadUserProgress();
+        updateStats();
+        
+        // Carregar progresso do usuário
+        function loadUserProgress() {
+            // Simulando carregamento de progresso do localStorage
+            const storedCompletedExercises = localStorage.getItem('completedExercises');
+            const storedActiveProjects = localStorage.getItem('activeProjects');
+            const storedStats = localStorage.getItem('userStats');
+            
+            if (storedCompletedExercises) {
+                completedExercises = JSON.parse(storedCompletedExercises);
+            }
+            
+            if (storedActiveProjects) {
+                activeProjects = JSON.parse(storedActiveProjects);
+            }
+            
+            if (storedStats) {
+                stats = JSON.parse(storedStats);
+            }
+        }
+        
+        // Salvar progresso do usuário
+        function saveUserProgress() {
+            localStorage.setItem('completedExercises', JSON.stringify(completedExercises));
+            localStorage.setItem('activeProjects', JSON.stringify(activeProjects));
+            localStorage.setItem('userStats', JSON.stringify(stats));
+        }
+        
+        // Atualizar estatísticas
+        function updateStats() {
+            const statusItems = document.querySelectorAll('.status-number');
+            statusItems[0].textContent = stats.completedExercises;
+            statusItems[1].textContent = stats.activeProjects;
+            statusItems[2].textContent = stats.progress + '%';
+            statusItems[3].textContent = stats.experiencePoints;
+        }
+        
+        // Abrir modal de exercício
+        function openExerciseModal(exercise) {
+            // Preencher informações do exercício no modal
+            document.getElementById('exercise-title').textContent = exercise.title;
+            document.getElementById('exercise-description').textContent = exercise.description;
+            document.getElementById('exercise-time').textContent = `Tempo estimado: ${exercise.estimated_time}`;
+            
+            // Gerar dicas específicas conforme a tecnologia e nível
+            const tips = document.getElementById('exercise-tips');
+            tips.innerHTML = '';
+            
+            const tipsByLevel = {
+                'Básico': [
+                    `Consulte a documentação oficial de ${techSelector.value} para entender os conceitos básicos`,
+                    `Comece com exemplos simples antes de avançar para o exercício completo`,
+                    `Não hesite em usar recursos de debug para entender o fluxo do código`,
+                    `Pratique a sintaxe básica em um ambiente de sandbox antes de implementar a solução`
+                ],
+                'Intermediário': [
+                    `Aplique os padrões de design comuns em ${techSelector.value}`,
+                    `Considere a organização do código e módulos para facilitar a manutenção`,
+                    `Pesquise sobre bibliotecas que podem ajudar com funcionalidades específicas`,
+                    `Pense na escalabilidade da sua solução`
+                ],
+                'Avançado': [
+                    `Otimize sua solução considerando performance e uso de recursos`,
+                    `Implemente testes automatizados para validar a solução`,
+                    `Considere cenários edge-case e tratamento de erros robusto`,
+                    `Aplique padrões arquiteturais avançados específicos para ${techSelector.value}`
+                ]
+            };
+            
+            const levelTips = tipsByLevel[exercise.difficulty] || tipsByLevel['Básico'];
+            
+            levelTips.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = tip;
+                tips.appendChild(li);
+            });
+            
+            // Verificar se o exercício já foi concluído
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'none';
+            
+            if (isExerciseCompleted(exercise.id)) {
+                document.getElementById('exercise-complete-btn').textContent = 'Exercício Concluído';
+                document.getElementById('exercise-complete-btn').disabled = true;
+                successMessage.style.display = 'block';
+            } else {
+                document.getElementById('exercise-complete-btn').textContent = 'Marcar como Concluído';
+                document.getElementById('exercise-complete-btn').disabled = false;
+            }
+            
+            // Mostrar o modal
+            exerciseModal.style.display = 'flex';
+            
+            // Adicionar evento ao botão de conclusão
+            document.getElementById('exercise-complete-btn').onclick = function() {
+                completeExercise(exercise);
+            };
+            
+            // Adicionar evento ao botão de dica
+            document.getElementById('exercise-hint-btn').onclick = function() {
+                showExerciseHint(exercise);
+            };
+        }
+        
+        // Abrir modal de projeto
+        function openProjectModal(project) {
+            // Preencher informações do projeto no modal
+            document.getElementById('project-title').textContent = project.title;
+            document.getElementById('project-description').textContent = project.description;
+            document.getElementById('project-time').textContent = `Tempo estimado: ${project.estimated_time}`;
+            
+            // Mostrar características do projeto
+            const featuresElement = document.getElementById('project-features');
+            featuresElement.innerHTML = '';
+            
+            project.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresElement.appendChild(li);
+            });
+            
+            // Gerar recursos específicos conforme a tecnologia e nível
+            const resourcesElement = document.getElementById('project-resources');
+            resourcesElement.innerHTML = '';
+            
+            const resourcesByLevel = {
+                'Básico': [
+                    { text: `Documentação oficial de ${techSelector.value}`, link: '#' },
+                    { text: `Tutoriais para iniciantes em ${techSelector.value}`, link: '#' },
+                    { text: 'Exemplos de código básicos no CodeLab', link: '/codes' },
+                    { text: 'Comunidade de suporte para dúvidas', link: '#' }
+                ],
+                'Intermediário': [
+                    { text: `Guia de boas práticas para ${techSelector.value}`, link: '#' },
+                    { text: 'Padrões de design recomendados', link: '#' },
+                    { text: 'Exemplos de projetos similares', link: '#' },
+                    { text: 'Ferramentas de desenvolvimento recomendadas', link: '#' }
+                ],
+                'Avançado': [
+                    { text: 'Artigos sobre arquitetura escalável', link: '#' },
+                    { text: 'Técnicas de otimização e performance', link: '#' },
+                    { text: 'Implementação de CI/CD para o projeto', link: '#' },
+                    { text: 'Monitoramento e telemetria', link: '#' }
+                ]
+            };
+            
+            const levelResources = resourcesByLevel[project.difficulty] || resourcesByLevel['Básico'];
+            
+            levelResources.forEach(resource => {
+                const li = document.createElement('li');
+                if (resource.link) {
+                    const a = document.createElement('a');
+                    a.href = resource.link;
+                    a.textContent = resource.text;
+                    a.target = '_blank';
+                    li.appendChild(a);
+                } else {
+                    li.textContent = resource.text;
+                }
+                resourcesElement.appendChild(li);
+            });
+            
+            // Verificar se o projeto já está ativo
+            const successMessage = document.getElementById('project-success-message');
+            successMessage.style.display = 'none';
+            
+            if (isProjectActive(project.id)) {
+                document.getElementById('project-start-btn').textContent = 'Projeto em Andamento';
+                document.getElementById('project-start-btn').disabled = true;
+                successMessage.style.display = 'block';
+            } else {
+                document.getElementById('project-start-btn').textContent = 'Iniciar Projeto';
+                document.getElementById('project-start-btn').disabled = false;
+            }
+            
+            // Mostrar o modal
+            projectModal.style.display = 'flex';
+            
+            // Adicionar evento ao botão de início
+            document.getElementById('project-start-btn').onclick = function() {
+                startProject(project);
+            };
+            
+            // Adicionar evento ao botão de recursos adicionais
+            document.getElementById('project-resources-btn').onclick = function() {
+                showAdditionalResources(project);
+            };
+        }
+        
+        // Marcar exercício como concluído
+        function completeExercise(exercise) {
+            if (!isExerciseCompleted(exercise.id)) {
+                completedExercises.push(exercise.id);
+                stats.completedExercises++;
+                stats.experiencePoints += 10;
+                stats.progress = Math.min(100, Math.floor((stats.completedExercises / 20) * 100));
+                
+                saveUserProgress();
+                updateStats();
+                
+                // Mostrar mensagem de sucesso
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('exercise-complete-btn').textContent = 'Exercício Concluído';
+                document.getElementById('exercise-complete-btn').disabled = true;
+                
+                // Atualizar a interface
+                renderExercises(exercises);
+            }
+        }
+        
+        // Iniciar projeto
+        function startProject(project) {
+            if (!isProjectActive(project.id)) {
+                activeProjects.push(project.id);
+                stats.activeProjects++;
+                stats.experiencePoints += 20;
+                
+                saveUserProgress();
+                updateStats();
+                
+                // Mostrar mensagem de sucesso
+                document.getElementById('project-success-message').style.display = 'block';
+                document.getElementById('project-start-btn').textContent = 'Projeto em Andamento';
+                document.getElementById('project-start-btn').disabled = true;
+                
+                // Atualizar a interface
+                renderProjects(projects);
+            }
+        }
+        
+        // Verificar se exercício está concluído
+        function isExerciseCompleted(id) {
+            return completedExercises.includes(id);
+        }
+        
+        // Verificar se projeto está ativo
+        function isProjectActive(id) {
+            return activeProjects.includes(id);
+        }
+        
+        // Mostrar dica para exercício
+        function showExerciseHint(exercise) {
+            const hintsByTech = {
+                'Node.js': 'Considere o uso de módulos nativos do Node.js para simplificar a implementação.',
+                'Express': 'A documentação do Express tem exemplos específicos para este tipo de problema.',
+                'NestJS': 'Os decoradores do NestJS podem ajudar a simplificar esta implementação.',
+                'Fastify': 'Os esquemas do Fastify ajudam a validar entradas para evitar problemas.',
+                'React': 'Considere o uso de hooks para gerenciar o estado deste componente.',
+                'Angular': 'Os serviços do Angular são ideais para este tipo de funcionalidade.',
+                'Vue.js': 'Os componentes Vue podem encapsular esta lógica de forma elegante.'
+            };
+            
+            const hint = hintsByTech[techSelector.value] || 'Divida o problema em partes menores para facilitar a solução.';
+            
+            // Exibir dica em um alerta customizado
+            const hintBox = document.createElement('div');
+            hintBox.className = 'alert alert-info mt-3';
+            hintBox.innerHTML = `<strong>Dica extra:</strong> ${hint}`;
+            
+            // Remover dica anterior, se existir
+            const oldHint = document.querySelector('.alert.alert-info');
+            if (oldHint) {
+                oldHint.remove();
+            }
+            
+            // Adicionar nova dica
+            document.querySelector('.modal-body').appendChild(hintBox);
+            
+            // Atualizar o botão
+            document.getElementById('exercise-hint-btn').textContent = 'Dica Mostrada';
+            document.getElementById('exercise-hint-btn').disabled = true;
+        }
+        
+        // Mostrar recursos adicionais para projeto
+        function showAdditionalResources(project) {
+            const resourcesByTech = {
+                'Node.js': [
+                    { text: 'Best Practices for Node.js Development', link: '#' },
+                    { text: 'Node.js Design Patterns Book', link: '#' }
+                ],
+                'Express': [
+                    { text: 'RESTful API Design with Express', link: '#' },
+                    { text: 'Express Security Best Practices', link: '#' }
+                ],
+                'NestJS': [
+                    { text: 'Enterprise Architecture with NestJS', link: '#' },
+                    { text: 'Advanced NestJS Techniques', link: '#' }
+                ],
+                'React': [
+                    { text: 'React Performance Optimization', link: '#' },
+                    { text: 'Advanced Component Patterns', link: '#' }
+                ]
+            };
+            
+            const resources = resourcesByTech[techSelector.value] || [
+                { text: 'Design Patterns in Software Engineering', link: '#' },
+                { text: 'Clean Code Principles', link: '#' }
+            ];
+            
+            // Exibir recursos em um alerta customizado
+            const resourcesBox = document.createElement('div');
+            resourcesBox.className = 'alert alert-info mt-3';
+            resourcesBox.innerHTML = `
+                <strong>Recursos Adicionais:</strong>
+                <ul class="mt-2">
+                    ${resources.map(r => `<li><a href="${r.link}" target="_blank">${r.text}</a></li>`).join('')}
+                </ul>
+            `;
+            
+            // Remover recursos anteriores, se existirem
+            const oldResources = document.querySelector('.alert.alert-info');
+            if (oldResources) {
+                oldResources.remove();
+            }
+            
+            // Adicionar novos recursos
+            document.querySelector('.modal-body').appendChild(resourcesBox);
+            
+            // Atualizar o botão
+            document.getElementById('project-resources-btn').textContent = 'Recursos Mostrados';
+        }
+        
+        // Carregar e renderizar exercícios
+        function loadExercises(technology, level) {
+            // Mostrar loader
+            exercisesContainer.innerHTML = `
+                <div class="loader-container">
+                    <div class="loader"></div>
+                    <p>Carregando exercícios...</p>
+                </div>
+            `;
+            
+            // Fazer requisição para API
+            fetch(`/api/exercises/${technology}/${level}`)
+                .then(response => response.json())
+                .then(data => {
+                    exercises = data;
+                    renderExercises(exercises);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar exercícios:', error);
+                    exercisesContainer.innerHTML = `
+                        <div class="alert alert-danger">
+                            <p>Erro ao carregar exercícios. Por favor, tente novamente.</p>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Renderizar exercícios na interface
+        function renderExercises(exercises) {
+            if (exercises.length === 0) {
+                exercisesContainer.innerHTML = `
+                    <div class="alert alert-info">
+                        <p>Nenhum exercício encontrado para esta tecnologia e nível.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="grid grid-3">';
+            
+            exercises.forEach(exercise => {
+                const isCompleted = isExerciseCompleted(exercise.id);
+                const statusClass = isCompleted ? 'success' : getDifficultyClass(exercise.difficulty);
+                const statusText = isCompleted ? 'Concluído' : exercise.difficulty;
+                const buttonText = isCompleted ? 'Ver Detalhes' : 'Iniciar';
+                
+                html += `
+                    <div class="card exercise-card" data-id="${exercise.id}">
+                        <div class="card-body">
+                            <span class="badge badge-${statusClass} mb-2">${statusText}</span>
+                            <h3 class="card-title">${exercise.title}</h3>
+                            <p>${exercise.description}</p>
+                            <div class="exercise-meta">
+                                <span><i class="far fa-clock"></i> ${exercise.estimated_time}</span>
+                                <a href="#" class="btn btn-sm btn-primary start-exercise" data-id="${exercise.id}">
+                                    ${buttonText}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            exercisesContainer.innerHTML = html;
+            
+            // Adicionar eventos aos botões de início
+            document.querySelectorAll('.start-exercise').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const id = this.getAttribute('data-id');
+                    const exercise = exercises.find(ex => ex.id === id);
+                    if (exercise) {
+                        openExerciseModal(exercise);
+                    }
+                });
             });
         }
         
-        // Atualiza a exibição quando a aba "Exercícios" é clicada
-        const exercisesTab = document.querySelector('[data-target="exercises-tab"]');
-        if (exercisesTab) {
-            exercisesTab.addEventListener('click', function() {
-                const techSelector = document.querySelector('.tech-selector');
-                const levelSelector = document.querySelector('.level-selector');
-                // Mostra o seletor de nível quando estiver na aba de exercícios
-                document.getElementById('level-selector-container').style.display = 'block';
-                // Carrega os exercícios
-                loadExercisesOrCodes(techSelector.value, levelSelector.value);
+        // Carregar e renderizar projetos
+        function loadProjects(technology) {
+            // Mostrar loader
+            projectsContainer.innerHTML = `
+                <div class="loader-container">
+                    <div class="loader"></div>
+                    <p>Carregando projetos...</p>
+                </div>
+            `;
+            
+            // Fazer requisição para API
+            fetch(`/api/projects/${technology}`)
+                .then(response => response.json())
+                .then(data => {
+                    projects = data;
+                    renderProjects(projects);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar projetos:', error);
+                    projectsContainer.innerHTML = `
+                        <div class="alert alert-danger">
+                            <p>Erro ao carregar projetos. Por favor, tente novamente.</p>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Renderizar projetos na interface
+        function renderProjects(projects) {
+            if (projects.length === 0) {
+                projectsContainer.innerHTML = `
+                    <div class="alert alert-info">
+                        <p>Nenhum projeto encontrado para esta tecnologia.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Agrupar projetos por nível
+            const groupedProjects = {};
+            projects.forEach(project => {
+                if (!groupedProjects[project.difficulty]) {
+                    groupedProjects[project.difficulty] = [];
+                }
+                groupedProjects[project.difficulty].push(project);
+            });
+            
+            let html = '';
+            
+            // Renderizar projetos por nível
+            Object.keys(groupedProjects).forEach(level => {
+                html += `<h2 class="mb-3 mt-4">Projetos ${level}</h2>`;
+                html += '<div class="grid grid-3">';
+                
+                groupedProjects[level].forEach(project => {
+                    const isActive = isProjectActive(project.id);
+                    const statusClass = isActive ? 'success' : getDifficultyClass(project.difficulty);
+                    const statusText = isActive ? 'Em Andamento' : project.difficulty;
+                    const buttonText = isActive ? 'Ver Detalhes' : 'Iniciar';
+                    
+                    html += `
+                        <div class="card project-card" data-id="${project.id}">
+                            <div class="card-body">
+                                <span class="badge badge-${statusClass} mb-2">${statusText}</span>
+                                <h3 class="card-title">${project.title}</h3>
+                                <p>${project.description}</p>
+                                <div class="mt-3">
+                                    <h4 class="mb-2">Características:</h4>
+                                    <ul>
+                                        ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div class="project-meta">
+                                    <span><i class="far fa-clock"></i> ${project.estimated_time}</span>
+                                    <a href="#" class="btn btn-sm btn-primary start-project" data-id="${project.id}">
+                                        ${buttonText}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            });
+            
+            projectsContainer.innerHTML = html;
+            
+            // Adicionar eventos aos botões de início
+            document.querySelectorAll('.start-project').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const id = this.getAttribute('data-id');
+                    const project = projects.find(proj => proj.id === id);
+                    if (project) {
+                        openProjectModal(project);
+                    }
+                });
             });
         }
         
-        // Carrega os exercícios iniciais ao carregar a página
-        const techSelector = document.querySelector('.tech-selector');
-        const levelSelector = document.querySelector('.level-selector');
-        if (techSelector && levelSelector) {
-            loadExercisesOrCodes(techSelector.value, levelSelector.value);
+        // Utilitário para obter classe de cores baseada na dificuldade
+        function getDifficultyClass(difficulty) {
+            switch (difficulty) {
+                case 'Básico':
+                    return 'success';
+                case 'Intermediário':
+                    return 'warning';
+                case 'Avançado':
+                    return 'danger';
+                default:
+                    return 'primary';
+            }
         }
+        
+        // Eventos das abas
+        const tabItems = document.querySelectorAll('.tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove a classe active de todas as abas
+                tabItems.forEach(item => item.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Adiciona a classe active à aba clicada
+                this.classList.add('active');
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+                
+                // Ajusta o seletor de nível conforme a aba
+                const levelContainer = document.getElementById('level-selector-container');
+                if (target === 'projects-tab') {
+                    levelContainer.style.display = 'none';
+                    loadProjects(techSelector.value);
+                } else {
+                    levelContainer.style.display = 'block';
+                    loadExercises(techSelector.value, levelSelector.value);
+                }
+            });
+        });
+        
+        // Evento para selecionar tecnologia
+        techSelector.addEventListener('change', function() {
+            const activeTab = document.querySelector('.tab-item.active');
+            const targetId = activeTab.getAttribute('data-target');
+            
+            if (targetId === 'exercises-tab') {
+                loadExercises(this.value, levelSelector.value);
+            } else {
+                loadProjects(this.value);
+            }
+        });
+        
+        // Evento para selecionar nível
+        levelSelector.addEventListener('change', function() {
+            loadExercises(techSelector.value, this.value);
+        });
+        
+        // Eventos para fechar modais
+        closeExerciseModal.addEventListener('click', function() {
+            exerciseModal.style.display = 'none';
+        });
+        
+        closeProjectModal.addEventListener('click', function() {
+            projectModal.style.display = 'none';
+        });
+        
+        // Fechar modais ao clicar fora deles
+        window.addEventListener('click', function(event) {
+            if (event.target === exerciseModal) {
+                exerciseModal.style.display = 'none';
+            }
+            if (event.target === projectModal) {
+                projectModal.style.display = 'none';
+            }
+        });
+        
+        // Eventos para filtros de tags
+        const tagFilters = document.querySelectorAll('.tag');
+        tagFilters.forEach(tag => {
+            tag.addEventListener('click', function() {
+                tagFilters.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Implementação simplificada - apenas visual neste exemplo
+                // Em uma implementação real, filtraria os exercícios/projetos
+            });
+        });
+        
+        // Carregar exercícios iniciais
+        loadExercises(techSelector.value, levelSelector.value);
     });
 </script>
 {% endblock %}
