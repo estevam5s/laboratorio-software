@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}CodeLab - Laboratório Completo para Desenvolvedores{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Evolua suas habilidades em programação</h1>
+            <p>Um laboratório completo para desenvolvedores com exercícios, projetos e recursos para todos os níveis.</p>
+            <div class="hero-buttons">
+                <a href="/laboratory" class="btn btn-light">Explorar Laboratório</a>
+                <a href="/level-finder" class="btn btn-outline-light">Descobrir Seu Nível</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Por que escolher o CodeLab?</h2>
+            <p>Nossa plataforma oferece recursos completos para desenvolvedores em todos os níveis</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>+1000 Exercícios</h3>
+                <p>Exercícios práticos com diferentes níveis de dificuldade para aprimorar suas habilidades de codificação.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>+500 Projetos</h3>
+                <p>Projetos completos para construir seu portfólio e ganhar experiência prática de desenvolvimento.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <h3>Múltiplas Tecnologias</h3>
+                <p>Recursos para diversas tecnologias e frameworks: NestJS, Express, Fastify e muito mais.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-signs"></i>
+                </div>
+                <h3>Roadmaps Completos</h3>
+                <p>Caminhos de aprendizado para guiar seu desenvolvimento profissional de iniciante a especialista.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Avaliação de Nível</h3>
+                <p>Descubra seu nível de habilidade atual e receba recomendações personalizadas para evoluir.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3>Oportunidades</h3>
+                <p>Encontre vagas de emprego alinhadas com suas habilidades e nível de experiência.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technologies Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Tecnologias em Destaque</h2>
+            <p>Explore nossos recursos para diversas tecnologias modernas</p>
+        </div>
+        
+        <div id="featured-techs">
+            <div class="text-center">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p>Carregando tecnologias...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Career Levels Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Níveis de Carreira</h2>
+            <p>Entenda os diferentes níveis de carreira em desenvolvimento de software</p>
+        </div>
+        
+        <div class="roadmap">
+            {% for level, data in levels.items() %}
+            <div class="roadmap-item">
+                <div class="roadmap-marker">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="roadmap-content">
+                    <h3>{{ level }}</h3>
+                    <p>{{ data.description }}</p>
+                    <div class="mt-3">
+                        <strong>Experiência típica:</strong> {{ data.experience }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="/skill-level" class="btn btn-primary">Explorar Níveis em Detalhes</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white;">
+    <div class="container">
+        <div class="text-center">
+            <h2 style="color: white;">Comece sua jornada de desenvolvimento hoje</h2>
+            <p class="mb-4">Acesse nosso laboratório e comece a evoluir suas habilidades como desenvolvedor</p>
+            <a href="/laboratory" class="btn btn-light btn-lg">Acessar Laboratório</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,709 @@
+{% extends 'base.html' %}
+
+{% block title %}Roadmap - CodeLab{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Roadmaps de Desenvolvimento</h2>
+            <p>Guias completos para a sua jornada de aprendizado em tecnologia</p>
+        </div>
+    </div>
+</section>
+
+<!-- Area Selection Section -->
+<section class="section">
+    <div class="container">
+        <div class="card mb-5">
+            <div class="card-body">
+                <h3 class="mb-3">Escolha sua Área de Interesse</h3>
+                <p class="mb-4">Selecione uma das áreas abaixo para visualizar o roadmap detalhado.</p>
+                
+                <div class="tabs">
+                    <div class="tab-list">
+                        {% for area_name in tech_areas.keys() %}
+                        <div class="tab-item {% if loop.first %}active{% endif %}" data-target="{{ area_name|lower|replace(' ', '-') }}-tab">{{ area_name }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Roadmap Tabs Content -->
+        {% for area_name, area_data in tech_areas.items() %}
+        <div id="{{ area_name|lower|replace(' ', '-') }}-tab" class="tab-content {% if loop.first %}active{% endif %}">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2>{{ area_name }}</h2>
+                    <p>{{ area_data.description }}</p>
+                    
+                    <div class="alert alert-info mt-3">
+                        <p><strong>Nota:</strong> Este roadmap serve como um guia geral. Você pode adaptar seu percurso de aprendizado de acordo com seus objetivos específicos e interesses.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Roadmap Steps -->
+            <div class="roadmap">
+                <!-- Foundations -->
+                <div class="roadmap-item">
+                    <div class="roadmap-marker">
+                        <i class="fas fa-1"></i>
+                    </div>
+                    <div class="roadmap-content">
+                        <h3>Fundamentos</h3>
+                        <p>Conceitos básicos e habilidades fundamentais para {{ area_name }}.</p>
+                        
+                        {% if area_name == 'Backend' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Linguagens:</h4>
+                            <div class="grid grid-3">
+                                {% for skill in area_data.core_skills %}
+                                <div class="badge badge-light p-2 m-1">{{ skill }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos Essenciais:</h4>
+                            <ul>
+                                <li>Estruturas de dados e algoritmos</li>
+                                <li>Programação orientada a objetos</li>
+                                <li>Protocolos HTTP/HTTPS</li>
+                                <li>APIs RESTful</li>
+                                <li>Fundamentos de banco de dados</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'Frontend' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Tecnologias Fundamentais:</h4>
+                            <div class="grid grid-3">
+                                {% for skill in area_data.core_skills %}
+                                <div class="badge badge-light p-2 m-1">{{ skill }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos Essenciais:</h4>
+                            <ul>
+                                <li>Semântica HTML</li>
+                                <li>Layouts responsivos</li>
+                                <li>Manipulação do DOM</li>
+                                <li>Eventos e Listeners</li>
+                                <li>Acessibilidade web</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'FullStack' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Tecnologias Fundamentais:</h4>
+                            <div class="grid grid-3">
+                                {% for skill in area_data.core_skills %}
+                                <div class="badge badge-light p-2 m-1">{{ skill }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos Essenciais:</h4>
+                            <ul>
+                                <li>HTML, CSS e JavaScript</li>
+                                <li>Programação orientada a objetos</li>
+                                <li>APIs RESTful</li>
+                                <li>Fundamentos de banco de dados</li>
+                                <li>Arquitetura cliente-servidor</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'DevOps' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Habilidades Fundamentais:</h4>
+                            <div class="grid grid-3">
+                                {% for skill in area_data.core_skills %}
+                                <div class="badge badge-light p-2 m-1">{{ skill }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos Essenciais:</h4>
+                            <ul>
+                                <li>Sistemas operacionais (Linux)</li>
+                                <li>Redes e segurança</li>
+                                <li>Automação e scripting</li>
+                                <li>Infraestrutura como código</li>
+                                <li>Princípios de CI/CD</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'Data Science' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Ferramentas e Linguagens:</h4>
+                            <div class="grid grid-3">
+                                {% for skill in area_data.core_skills %}
+                                <div class="badge badge-light p-2 m-1">{{ skill }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos Essenciais:</h4>
+                            <ul>
+                                <li>Estatística básica</li>
+                                <li>Manipulação de dados</li>
+                                <li>Visualização de dados</li>
+                                <li>Algebra linear</li>
+                                <li>Fundamentos de aprendizado de máquina</li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Habilidades Fundamentais:</h4>
+                            <ul>
+                                <li>Fundamentos de programação</li>
+                                <li>Estruturas de dados e algoritmos</li>
+                                <li>Arquitetura de software</li>
+                                <li>Boas práticas de codificação</li>
+                                <li>Controle de versão (Git)</li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mt-4">
+                            <a href="/level-finder" class="btn btn-primary">Verificar Seu Nível</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Intermediate -->
+                <div class="roadmap-item">
+                    <div class="roadmap-marker">
+                        <i class="fas fa-2"></i>
+                    </div>
+                    <div class="roadmap-content">
+                        <h3>Ferramentas e Frameworks</h3>
+                        <p>Tecnologias específicas e frameworks populares para {{ area_name }}.</p>
+                        
+                        {% if area_name == 'Backend' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Frameworks:</h4>
+                            <div class="grid grid-3">
+                                {% for framework in area_data.frameworks %}
+                                <div class="badge badge-light p-2 m-1">{{ framework }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Bancos de Dados:</h4>
+                            <div class="grid grid-3">
+                                {% for db in area_data.databases %}
+                                <div class="badge badge-light p-2 m-1">{{ db }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos a Aprender:</h4>
+                            <ul>
+                                <li>ORM (Object-Relational Mapping)</li>
+                                <li>Middleware</li>
+                                <li>Autenticação e autorização</li>
+                                <li>WebSockets</li>
+                                <li>Testes automatizados</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'Frontend' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Frameworks e Bibliotecas:</h4>
+                            <div class="grid grid-3">
+                                {% for framework in area_data.frameworks %}
+                                <div class="badge badge-light p-2 m-1">{{ framework }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Ferramentas:</h4>
+                            <div class="grid grid-3">
+                                {% for tool in area_data.tools %}
+                                <div class="badge badge-light p-2 m-1">{{ tool }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos a Aprender:</h4>
+                            <ul>
+                                <li>Gerenciamento de estado</li>
+                                <li>Componentes reutilizáveis</li>
+                                <li>Renderização do lado do cliente vs. servidor</li>
+                                <li>Consumo de APIs</li>
+                                <li>CSS avançado e pré-processadores</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'FullStack' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Stacks Populares:</h4>
+                            <div class="grid grid-2">
+                                {% for framework in area_data.frameworks %}
+                                <div class="badge badge-light p-2 m-1">{{ framework }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Ferramentas:</h4>
+                            <div class="grid grid-3">
+                                {% for tool in area_data.tools %}
+                                <div class="badge badge-light p-2 m-1">{{ tool }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos a Aprender:</h4>
+                            <ul>
+                                <li>Arquitetura MVC</li>
+                                <li>RESTful APIs</li>
+                                <li>Autenticação JWT</li>
+                                <li>ORM e modelagem de dados</li>
+                                <li>Integração frontend-backend</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'DevOps' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Ferramentas:</h4>
+                            <div class="grid grid-3">
+                                {% for tool in area_data.tools %}
+                                <div class="badge badge-light p-2 m-1">{{ tool }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Plataformas:</h4>
+                            <div class="grid grid-3">
+                                {% for platform in area_data.platforms %}
+                                <div class="badge badge-light p-2 m-1">{{ platform }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos a Aprender:</h4>
+                            <ul>
+                                <li>Containerização e orquestração</li>
+                                <li>Pipelines de CI/CD</li>
+                                <li>Infraestrutura como código (IaC)</li>
+                                <li>Monitoramento e logging</li>
+                                <li>Cloud computing</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'Data Science' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Bibliotecas:</h4>
+                            <div class="grid grid-3">
+                                {% for library in area_data.libraries %}
+                                <div class="badge badge-light p-2 m-1">{{ library }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Ferramentas:</h4>
+                            <div class="grid grid-3">
+                                {% for tool in area_data.tools %}
+                                <div class="badge badge-light p-2 m-1">{{ tool }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <h4 class="mt-3 mb-2">Conceitos a Aprender:</h4>
+                            <ul>
+                                <li>Estatística avançada</li>
+                                <li>Modelos supervisionados e não supervisionados</li>
+                                <li>Processamento de dados em grande escala</li>
+                                <li>Feature engineering</li>
+                                <li>Validação e avaliação de modelos</li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Ferramentas:</h4>
+                            <ul>
+                                <li>Frameworks populares</li>
+                                <li>Bibliotecas e dependências comuns</li>
+                                <li>Ferramentas de build e deploy</li>
+                                <li>Automação de testes</li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mt-4">
+                            <a href="/codes" class="btn btn-primary">Ver Exemplos de Código</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Advanced -->
+                <div class="roadmap-item">
+                    <div class="roadmap-marker">
+                        <i class="fas fa-3"></i>
+                    </div>
+                    <div class="roadmap-content">
+                        <h3>Técnicas Avançadas</h3>
+                        <p>Conceitos e práticas avançadas para profissionais de {{ area_name }}.</p>
+                        
+                        {% if area_name == 'Backend' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Arquitetura e Design:</h4>
+                            <ul>
+                                <li>Microsserviços</li>
+                                <li>Event sourcing</li>
+                                <li>CQRS</li>
+                                <li>Domain-Driven Design (DDD)</li>
+                                <li>GraphQL</li>
+                            </ul>
+                            
+                            <h4 class="mt-3 mb-2">Performance e Escalabilidade:</h4>
+                            <ul>
+                                <li>Caching estratégico</li>
+                                <li>Balanceamento de carga</li>
+                                <li>Bancos de dados distribuídos</li>
+                                <li>Message brokers</li>
+                                <li>Otimização de queries</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'Frontend' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Performance e Otimização:</h4>
+                            <ul>
+                                <li>Web vitals e métricas de performance</li>
+                                <li>Code splitting e lazy loading</li>
+                                <li>Server-side rendering (SSR)</li>
+                                <li>Estratégias de caching</li>
+                                <li>Progressive Web Apps (PWA)</li>
+                            </ul>
+                            
+                            <h4 class="mt-3 mb-2">UX e Arquitetura:</h4>
+                            <ul>
+                                <li>Micro-frontends</li>
+                                <li>Arquitetura Flux/Redux</li>
+                                <li>Design systems</li>
+                                <li>Acessibilidade avançada</li>
+                                <li>Animações e transições</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'FullStack' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Arquitetura de Sistemas:</h4>
+                            <ul>
+                                <li>Microsserviços</li>
+                                <li>Serverless</li>
+                                <li>Arquiteturas híbridas</li>
+                                <li>APIs GraphQL</li>
+                                <li>Sistemas distribuídos</li>
+                            </ul>
+                            
+                            <h4 class="mt-3 mb-2">DevOps e Deployment:</h4>
+                            <ul>
+                                <li>CI/CD para aplicações full-stack</li>
+                                <li>Containerização com Docker</li>
+                                <li>Orquestração com Kubernetes</li>
+                                <li>Monitoramento de aplicações</li>
+                                <li>Estratégias de deploy (blue/green, canary)</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'DevOps' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Operações Avançadas:</h4>
+                            <ul>
+                                <li>Arquitetura de nuvem multi-região</li>
+                                <li>Service mesh</li>
+                                <li>GitOps</li>
+                                <li>Infraestrutura imutável</li>
+                                <li>Estratégias de deployment zero-downtime</li>
+                            </ul>
+                            
+                            <h4 class="mt-3 mb-2">Observabilidade:</h4>
+                            <ul>
+                                <li>Sistemas de observabilidade distribuídos</li>
+                                <li>Análise de logs centralizada</li>
+                                <li>APM (Application Performance Monitoring)</li>
+                                <li>Dashboards de métricas</li>
+                                <li>Alertas inteligentes</li>
+                            </ul>
+                        </div>
+                        {% elif area_name == 'Data Science' %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Técnicas Avançadas:</h4>
+                            <ul>
+                                <li>Deep learning</li>
+                                <li>Processamento de linguagem natural</li>
+                                <li>Visão computacional</li>
+                                <li>Séries temporais</li>
+                                <li>Aprendizado por reforço</li>
+                            </ul>
+                            
+                            <h4 class="mt-3 mb-2">Engenharia de ML:</h4>
+                            <ul>
+                                <li>MLOps</li>
+                                <li>Pipelines de ML</li>
+                                <li>Deployment de modelos em produção</li>
+                                <li>Monitoramento de performance</li>
+                                <li>Sistemas de recomendação</li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="mt-3">
+                            <h4 class="mb-2">Técnicas Avançadas:</h4>
+                            <ul>
+                                <li>Arquitetura avançada</li>
+                                <li>Performance e otimização</li>
+                                <li>Escalabilidade</li>
+                                <li>Segurança avançada</li>
+                                <li>Integração de sistemas complexos</li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mt-4">
+                            <a href="/practice" class="btn btn-primary">Praticar com Projetos</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Specialization -->
+                <div class="roadmap-item">
+                    <div class="roadmap-marker">
+                        <i class="fas fa-4"></i>
+                    </div>
+                    <div class="roadmap-content">
+                        <h3>Especialização e Carreira</h3>
+                        <p>Caminhos de especialização e evolução profissional em {{ area_name }}.</p>
+                        
+                        <div class="mt-3">
+                            <h4 class="mb-2">Caminhos de Especialização:</h4>
+                            <div class="grid grid-2">
+                                {% if area_name == 'Backend' %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Arquiteto de Backend</h5>
+                                            <p>Especialize-se em arquitetura de sistemas distribuídos e decisões técnicas de alto nível.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em Banco de Dados</h5>
+                                            <p>Foque em design, performance e administração de bancos de dados.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em Segurança</h5>
+                                            <p>Concentre-se em segurança de aplicações, autenticação e proteção de dados.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em APIs</h5>
+                                            <p>Desenvolva expertise em design, implementação e gestão de APIs.</p>
+                                        </div>
+                                    </div>
+                                {% elif area_name == 'Frontend' %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Arquiteto de Frontend</h5>
+                                            <p>Especialize-se em arquiteturas escaláveis para aplicações frontend complexas.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em UX/UI</h5>
+                                            <p>Combine desenvolvimento frontend com design de interfaces e experiência do usuário.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em Performance</h5>
+                                            <p>Foque em otimização, métricas e performance de aplicações web.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Desenvolvedor Mobile/Híbrido</h5>
+                                            <p>Utilize suas habilidades de frontend para desenvolvimento mobile e híbrido.</p>
+                                        </div>
+                                    </div>
+                                {% elif area_name == 'FullStack' %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Arquiteto de Soluções</h5>
+                                            <p>Projetar sistemas completos e fazer escolhas arquiteturais de ponta a ponta.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Engenheiro DevOps</h5>
+                                            <p>Combine habilidades full-stack com práticas de CI/CD e infraestrutura.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Tech Lead</h5>
+                                            <p>Lidere equipes técnicas multidisciplinares com seu conhecimento abrangente.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Empreendedor Tech</h5>
+                                            <p>Desenvolva produtos completos do zero com suas habilidades full-stack.</p>
+                                        </div>
+                                    </div>
+                                {% elif area_name == 'DevOps' %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Arquiteto de Cloud</h5>
+                                            <p>Especializar-se em arquiteturas de nuvem, multi-cloud e estratégias de migração.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em SRE</h5>
+                                            <p>Foque em confiabilidade, automação e engenharia de sistemas.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista em Segurança DevSecOps</h5>
+                                            <p>Integre segurança em todos os aspectos do ciclo de desenvolvimento.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Platform Engineer</h5>
+                                            <p>Construa plataformas internas que facilitem o trabalho dos desenvolvedores.</p>
+                                        </div>
+                                    </div>
+                                {% elif area_name == 'Data Science' %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Cientista de Dados Especialista</h5>
+                                            <p>Especialize-se em áreas como NLP, visão computacional ou séries temporais.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Engenheiro de ML</h5>
+                                            <p>Foque na implementação, deployment e manutenção de sistemas de ML.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Analista de Dados</h5>
+                                            <p>Especialize-se em análise, visualização e comunicação de insights de dados.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Pesquisador de IA</h5>
+                                            <p>Trabalhe com pesquisa e desenvolvimento de novas técnicas e algoritmos.</p>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Especialista Técnico</h5>
+                                            <p>Aprofunde-se em tecnologias específicas e torne-se referência na área.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Arquiteto</h5>
+                                            <p>Projete sistemas complexos e tome decisões técnicas de alto nível.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Tech Lead</h5>
+                                            <p>Lidere equipes técnicas e guie decisões tecnológicas.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Empreendedor</h5>
+                                            <p>Use suas habilidades para criar produtos e soluções próprias.</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <h4 class="mt-4 mb-2">Desenvolvimento Contínuo:</h4>
+                            <ul>
+                                <li>Acompanhe tendências e novas tecnologias</li>
+                                <li>Participe de comunidades e eventos</li>
+                                <li>Contribua para projetos open source</li>
+                                <li>Compartilhe conhecimento (blogs, palestras)</li>
+                                <li>Busque mentoria e networking</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="/jobs" class="btn btn-primary">Ver Oportunidades de Carreira</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Resources Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recursos para Seu Roadmap</h2>
+            <p>Ferramentas e materiais para auxiliar sua jornada de aprendizado</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Planner de Aprendizado</h3>
+                    <p>Crie um plano personalizado com metas e prazos para sua jornada de desenvolvimento.</p>
+                    <a href="#" class="btn btn-primary mt-3">Criar Plano</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3>Checklists</h3>
+                    <p>Checklists para cada nível e área de especialização para acompanhar seu progresso.</p>
+                    <a href="#" class="btn btn-primary mt-3">Ver Checklists</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Biblioteca de Recursos</h3>
+                    <p>Livros, cursos, tutoriais e artigos recomendados para cada etapa do roadmap.</p>
+                    <a href="#" class="btn btn-primary mt-3">Explorar Biblioteca</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Funcionamento das abas
+        const tabItems = document.querySelectorAll('.tab-item');
+        if (tabItems) {
+            tabItems.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove a classe active de todas as abas
+                    tabItems.forEach(item => item.classList.remove('active'));
+                    
+                    // Adiciona a classe active à aba clicada
+                    this.classList.add('active');
+                    
+                    // Ativa o conteúdo da aba correspondente
+                    const target = this.dataset.target;
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === target) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,1319 @@
+{% extends 'base.html' %}
+
+{% block title %}Scripts - CodeLab{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Scripts Úteis</h2>
+            <p>Coleção de scripts e utilitários para desenvolvedores</p>
+        </div>
+    </div>
+</section>
+
+<!-- Scripts Categories Section -->
+<section class="section">
+    <div class="container">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="mb-3">Categorias de Scripts</h3>
+                <div class="tabs">
+                    <div class="tab-list">
+                        <div class="tab-item active" data-target="automation-tab">Automação</div>
+                        <div class="tab-item" data-target="deployment-tab">Deployment</div>
+                        <div class="tab-item" data-target="devops-tab">DevOps</div>
+                        <div class="tab-item" data-target="utility-tab">Utilitários</div>
+                        <div class="tab-item" data-target="conversion-tab">Conversão</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Automation Scripts Tab -->
+        <div id="automation-tab" class="tab-content active">
+            <h3 class="mb-3">Scripts de Automação</h3>
+            
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Automação de Build com Webpack</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">JavaScript</span>
+                            <span class="badge badge-light">Node.js</span>
+                            <span class="badge badge-light">Webpack</span>
+                        </div>
+                        <p>Script para automatizar o processo de build de aplicações frontend com Webpack, incluindo otimização de assets e minificação.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+// webpack.config.js
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.[contenthash].js',
+    clean: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'styles.[contenthash].css'
+    })
+  ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin(),
+      new CssMinimizerPlugin()
+    ]
+  }
+};</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Script de Automação de Testes</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">JavaScript</span>
+                            <span class="badge badge-light">Jest</span>
+                            <span class="badge badge-light">CI/CD</span>
+                        </div>
+                        <p>Script para automação de testes unitários e integração com pipelines de CI/CD.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+// jest.config.js
+module.exports = {
+  testEnvironment: 'node',
+  verbose: true,
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.js',
+    '!src/index.js',
+    '!**/node_modules/**',
+    '!**/vendor/**'
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
+    }
+  },
+  testMatch: [
+    '**/__tests__/**/*.js',
+    '**/?(*.)+(spec|test).js'
+  ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/'
+  ],
+  setupFilesAfterEnv: [
+    '<rootDir>/jest.setup.js'
+  ]
+};</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deployment Scripts Tab -->
+        <div id="deployment-tab" class="tab-content">
+            <h3 class="mb-3">Scripts de Deployment</h3>
+            
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Deployment com Docker</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Docker</span>
+                            <span class="badge badge-light">Shell</span>
+                            <span class="badge badge-light">DevOps</span>
+                        </div>
+                        <p>Script para automatizar o processo de deployment de aplicações usando Docker e Docker Compose.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+#!/bin/bash
+# deploy.sh - Script de deploy usando Docker
+
+# Configurações
+APP_NAME="myapp"
+DOCKER_IMAGE="myapp:latest"
+DOCKER_COMPOSE_FILE="docker-compose.yml"
+
+# Parar containers antigos
+echo "Parando containers antigos..."
+docker-compose -f $DOCKER_COMPOSE_FILE down
+
+# Construir nova imagem
+echo "Construindo nova imagem..."
+docker build -t $DOCKER_IMAGE .
+
+# Iniciar nova aplicação
+echo "Iniciando containers..."
+docker-compose -f $DOCKER_COMPOSE_FILE up -d
+
+# Verificar status
+echo "Verificando status dos containers..."
+docker ps | grep $APP_NAME
+
+# Limpar imagens antigas
+echo "Limpando imagens não utilizadas..."
+docker image prune -f
+
+echo "Deployment concluído com sucesso!"</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Deploy para AWS</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">AWS</span>
+                            <span class="badge badge-light">Python</span>
+                            <span class="badge badge-light">Cloud</span>
+                        </div>
+                        <p>Script Python para automatizar o deployment de aplicações para AWS usando Boto3.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+# aws_deploy.py
+import boto3
+import time
+import os
+
+def deploy_to_ec2():
+    """Deploy application to EC2 instance"""
+    print("Iniciando deployment para AWS EC2...")
+
+    # Configurações
+    EC2_INSTANCE_ID = os.environ.get('EC2_INSTANCE_ID')
+    S3_BUCKET = os.environ.get('S3_BUCKET')
+    APP_BUNDLE = 'app-bundle.zip'
+    
+    # Validação de variáveis
+    if not EC2_INSTANCE_ID or not S3_BUCKET:
+        print("Erro: Variáveis de ambiente EC2_INSTANCE_ID e S3_BUCKET são necessárias")
+        return False
+
+    try:
+        # Inicializar clientes AWS
+        ec2 = boto3.client('ec2')
+        s3 = boto3.client('s3')
+        ssm = boto3.client('ssm')
+        
+        # Fazer upload do bundle para S3
+        print(f"Fazendo upload do bundle para S3 bucket: {S3_BUCKET}")
+        s3.upload_file(APP_BUNDLE, S3_BUCKET, APP_BUNDLE)
+        
+        # Executar comando para baixar e instalar no EC2
+        print(f"Executando deployment no EC2 instance: {EC2_INSTANCE_ID}")
+        response = ssm.send_command(
+            InstanceIds=[EC2_INSTANCE_ID],
+            DocumentName="AWS-RunShellScript",
+            Parameters={
+                'commands': [
+                    f'aws s3 cp s3://{S3_BUCKET}/{APP_BUNDLE} /tmp/',
+                    'cd /tmp',
+                    'unzip -o app-bundle.zip -d /var/www/app/',
+                    'cd /var/www/app',
+                    'npm install --production',
+                    'systemctl restart app'
+                ]
+            }
+        )
+        
+        # Verificar status do comando
+        command_id = response['Command']['CommandId']
+        time.sleep(5)  # Esperar um pouco para o comando iniciar
+        
+        output = ssm.get_command_invocation(
+            CommandId=command_id,
+            InstanceId=EC2_INSTANCE_ID
+        )
+        
+        if output['Status'] in ['Success', 'InProgress']:
+            print("Deployment iniciado com sucesso!")
+            return True
+        else:
+            print(f"Erro no deployment: {output['StatusDetails']}")
+            return False
+            
+    except Exception as e:
+        print(f"Erro durante o deployment: {str(e)}")
+        return False
+
+if __name__ == "__main__":
+    deploy_to_ec2()</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DevOps Scripts Tab -->
+        <div id="devops-tab" class="tab-content">
+            <h3 class="mb-3">Scripts de DevOps</h3>
+            
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Monitoramento de Serviços</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Python</span>
+                            <span class="badge badge-light">Monitoramento</span>
+                            <span class="badge badge-light">DevOps</span>
+                        </div>
+                        <p>Script Python para monitoramento de serviços e envio de alertas.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+# monitor_services.py
+import requests
+import smtplib
+import time
+import logging
+from email.message import EmailMessage
+from datetime import datetime
+
+# Configuração de logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='service_monitor.log'
+)
+
+# Configurações
+SERVICES = [
+    {'name': 'API Gateway', 'url': 'https://api.example.com/health', 'expected_status': 200},
+    {'name': 'Auth Service', 'url': 'https://auth.example.com/health', 'expected_status': 200},
+    {'name': 'Database', 'url': 'https://db.example.com/status', 'expected_status': 200}
+]
+
+# Configurações de e-mail
+EMAIL_FROM = 'alerts@example.com'
+EMAIL_TO = ['devops@example.com', 'team@example.com']
+SMTP_SERVER = 'smtp.example.com'
+SMTP_PORT = 587
+SMTP_USER = 'alerts@example.com'
+SMTP_PASSWORD = 'your_password'  # Na prática, use variáveis de ambiente
+
+def check_service(service):
+    """Verifica o status de um serviço"""
+    try:
+        response = requests.get(service['url'], timeout=10)
+        if response.status_code == service['expected_status']:
+            logging.info(f"Service {service['name']} is UP. Status: {response.status_code}")
+            return True
+        else:
+            logging.error(f"Service {service['name']} returned unexpected status: {response.status_code}")
+            return False
+    except Exception as e:
+        logging.error(f"Error checking service {service['name']}: {str(e)}")
+        return False
+
+def send_alert(service_name, error_message):
+    """Envia um alerta por e-mail"""
+    try:
+        msg = EmailMessage()
+        msg.set_content(f"""
+        ALERT: Service {service_name} is DOWN!
+        
+        Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        Error: {error_message}
+        
+        Please check the service immediately.
+        """)
+        
+        msg['Subject'] = f'[ALERT] Service {service_name} is DOWN!'
+        msg['From'] = EMAIL_FROM
+        msg['To'] = ', '.join(EMAIL_TO)
+        
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.send_message(msg)
+            
+        logging.info(f"Alert sent for service {service_name}")
+    except Exception as e:
+        logging.error(f"Error sending alert: {str(e)}")
+
+def monitor_services():
+    """Monitora todos os serviços continuamente"""
+    service_status = {service['name']: True for service in SERVICES}  # Assume todos estão UP inicialmente
+    
+    while True:
+        for service in SERVICES:
+            current_status = check_service(service)
+            
+            # Se o serviço estava UP e agora está DOWN, envia alerta
+            if service_status[service['name']] and not current_status:
+                send_alert(service['name'], f"Service is not responding with expected status code {service['expected_status']}")
+            
+            # Atualiza o status
+            service_status[service['name']] = current_status
+        
+        # Intervalo de verificação (5 minutos)
+        time.sleep(300)
+
+if __name__ == "__main__":
+    logging.info("Service monitoring started")
+    monitor_services()</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Backup de Banco de Dados</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Bash</span>
+                            <span class="badge badge-light">Database</span>
+                            <span class="badge badge-light">AWS</span>
+                        </div>
+                        <p>Script de backup automatizado para bancos de dados PostgreSQL com upload para AWS S3.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+#!/bin/bash
+# db_backup.sh - Script de backup do PostgreSQL para S3
+
+# Configurações
+DB_NAME="myapp_db"
+DB_USER="postgres"
+S3_BUCKET="backups-myapp"
+BACKUP_DIR="/tmp/backups"
+DATE=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILE="${BACKUP_DIR}/${DB_NAME}_${DATE}.sql.gz"
+
+# Criar diretório de backup se não existir
+mkdir -p $BACKUP_DIR
+
+# Log
+echo "$(date): Iniciando backup do banco de dados $DB_NAME"
+
+# Executar o backup
+pg_dump -U $DB_USER $DB_NAME | gzip > $BACKUP_FILE
+
+# Verificar se o backup foi bem-sucedido
+if [ $? -eq 0 ]; then
+    echo "$(date): Backup criado com sucesso: $BACKUP_FILE"
+    
+    # Upload para S3
+    echo "$(date): Enviando backup para S3..."
+    aws s3 cp $BACKUP_FILE s3://$S3_BUCKET/
+    
+    if [ $? -eq 0 ]; then
+        echo "$(date): Backup enviado para S3 com sucesso!"
+        
+        # Remover arquivo local após upload
+        rm $BACKUP_FILE
+        echo "$(date): Arquivo local removido."
+        
+        # Manter apenas os últimos 7 dias de backups no S3
+        echo "$(date): Removendo backups antigos..."
+        aws s3 ls s3://$S3_BUCKET/ | grep "${DB_NAME}_" | sort -r | tail -n +8 | awk '{print $4}' | xargs -I {} aws s3 rm s3://$S3_BUCKET/{}
+        
+        echo "$(date): Backup concluído com sucesso!"
+        exit 0
+    else
+        echo "$(date): ERRO - Falha ao enviar backup para S3!"
+        exit 1
+    fi
+else
+    echo "$(date): ERRO - Falha ao criar backup do banco de dados!"
+    exit 1
+fi</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Utility Scripts Tab -->
+        <div id="utility-tab" class="tab-content">
+            <h3 class="mb-3">Scripts Utilitários</h3>
+            
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Compressão e Otimização de Imagens</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Node.js</span>
+                            <span class="badge badge-light">ImageMin</span>
+                            <span class="badge badge-light">Frontend</span>
+                        </div>
+                        <p>Script para compressão e otimização de imagens para web com Node.js.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+// optimize-images.js
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
+const imageminSvgo = require('imagemin-svgo');
+const imageminGifsicle = require('imagemin-gifsicle');
+const imageminWebp = require('imagemin-webp');
+const fs = require('fs');
+const path = require('path');
+
+// Configurações
+const inputDir = './src/images';
+const outputDir = './dist/images';
+const convertToWebp = true;
+
+// Criar diretório de saída se não existir
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
+
+// Otimizar imagens
+async function optimizeImages() {
+  console.log('Otimizando imagens...');
+  
+  try {
+    // Otimizar formatos padrão
+    const files = await imagemin([`${inputDir}/**/*.{jpg,jpeg,png,gif,svg}`], {
+      destination: outputDir,
+      plugins: [
+        imageminMozjpeg({ quality: 80 }),
+        imageminPngquant({ quality: [0.65, 0.8] }),
+        imageminSvgo({
+          plugins: [
+            { name: 'removeViewBox', active: false },
+            { name: 'cleanupIDs', active: false }
+          ]
+        }),
+        imageminGifsicle({ optimizationLevel: 2 })
+      ]
+    });
+
+    console.log(`${files.length} imagens otimizadas!`);
+    
+    // Converter para WebP se necessário
+    if (convertToWebp) {
+      console.log('Convertendo imagens para WebP...');
+      
+      const webpFiles = await imagemin([`${inputDir}/**/*.{jpg,jpeg,png}`], {
+        destination: outputDir,
+        plugins: [
+          imageminWebp({ quality: 80 })
+        ]
+      });
+      
+      console.log(`${webpFiles.length} imagens convertidas para WebP!`);
+    }
+    
+    // Calcular economia de espaço
+    let originalSize = 0;
+    let optimizedSize = 0;
+    
+    // Obter tamanho original
+    const getAllFiles = (dir) => {
+      const files = fs.readdirSync(dir, { withFileTypes: true });
+      
+      return files.flatMap(file => {
+        const filePath = path.join(dir, file.name);
+        return file.isDirectory() ? getAllFiles(filePath) : filePath;
+      });
+    };
+    
+    const inputFiles = getAllFiles(inputDir);
+    inputFiles.forEach(file => {
+      const stats = fs.statSync(file);
+      originalSize += stats.size;
+    });
+    
+    // Obter tamanho otimizado
+    const outputFiles = getAllFiles(outputDir);
+    outputFiles.forEach(file => {
+      const stats = fs.statSync(file);
+      optimizedSize += stats.size;
+    });
+    
+    // Calcular economia
+    const savedBytes = originalSize - optimizedSize;
+    const savingPercentage = (savedBytes / originalSize) * 100;
+    
+    console.log(`Economia de espaço: ${(savedBytes / 1024 / 1024).toFixed(2)} MB (${savingPercentage.toFixed(2)}%)`);
+    console.log('Otimização concluída com sucesso!');
+    
+  } catch (error) {
+    console.error('Erro durante a otimização:', error);
+  }
+}
+
+optimizeImages();</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Gerador de Código Boilerplate</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Node.js</span>
+                            <span class="badge badge-light">CLI</span>
+                            <span class="badge badge-light">Produtividade</span>
+                        </div>
+                        <p>Script para gerar código boilerplate para componentes React, controllers Express, etc.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+#!/usr/bin/env node
+// generate.js - Gerador de código boilerplate
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
+
+// Templates
+const templates = {
+  reactComponent: (name) => `import React from 'react';
+import PropTypes from 'prop-types';
+import './${name}.css';
+
+const ${name} = (props) => {
+  return (
+    <div className="${name.toLowerCase()}">
+      <h2>${name} Component</h2>
+    </div>
+  );
+};
+
+${name}.propTypes = {
+  // Define prop types here
+};
+
+${name}.defaultProps = {
+  // Define default props here
+};
+
+export default ${name};
+`,
+
+  reactComponentCSS: (name) => `.${name.toLowerCase()} {
+  /* Styles for ${name} component */
+}
+`,
+
+  expressController: (name) => `/**
+ * ${name} Controller
+ */
+class ${name}Controller {
+  /**
+   * Get all ${name.toLowerCase()}s
+   */
+  async getAll(req, res) {
+    try {
+      // Implement logic to get all items
+      const items = []; // Replace with actual data
+      
+      return res.status(200).json({
+        success: true,
+        data: items
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  }
+
+  /**
+   * Get ${name.toLowerCase()} by ID
+   */
+  async getById(req, res) {
+    try {
+      const { id } = req.params;
+      
+      // Implement logic to get item by id
+      const item = {}; // Replace with actual data
+      
+      if (!item) {
+        return res.status(404).json({
+          success: false,
+          error: '${name} not found'
+        });
+      }
+      
+      return res.status(200).json({
+        success: true,
+        data: item
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  }
+
+  /**
+   * Create new ${name.toLowerCase()}
+   */
+  async create(req, res) {
+    try {
+      // Implement logic to create item
+      const newItem = {}; // Replace with actual data
+      
+      return res.status(201).json({
+        success: true,
+        data: newItem
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  }
+
+  /**
+   * Update ${name.toLowerCase()}
+   */
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      
+      // Implement logic to update item
+      const updatedItem = {}; // Replace with actual data
+      
+      if (!updatedItem) {
+        return res.status(404).json({
+          success: false,
+          error: '${name} not found'
+        });
+      }
+      
+      return res.status(200).json({
+        success: true,
+        data: updatedItem
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  }
+
+  /**
+   * Delete ${name.toLowerCase()}
+   */
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      
+      // Implement logic to delete item
+      
+      return res.status(200).json({
+        success: true,
+        data: {}
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  }
+}
+
+module.exports = new ${name}Controller();
+`,
+
+  expressRoute: (name) => `const express = require('express');
+const ${name}Controller = require('../controllers/${name.toLowerCase()}.controller');
+const router = express.Router();
+
+/**
+ * @route   GET /api/${name.toLowerCase()}s
+ * @desc    Get all ${name.toLowerCase()}s
+ * @access  Public
+ */
+router.get('/', ${name}Controller.getAll);
+
+/**
+ * @route   GET /api/${name.toLowerCase()}s/:id
+ * @desc    Get ${name.toLowerCase()} by ID
+ * @access  Public
+ */
+router.get('/:id', ${name}Controller.getById);
+
+/**
+ * @route   POST /api/${name.toLowerCase()}s
+ * @desc    Create a new ${name.toLowerCase()}
+ * @access  Private
+ */
+router.post('/', ${name}Controller.create);
+
+/**
+ * @route   PUT /api/${name.toLowerCase()}s/:id
+ * @desc    Update ${name.toLowerCase()} by ID
+ * @access  Private
+ */
+router.put('/:id', ${name}Controller.update);
+
+/**
+ * @route   DELETE /api/${name.toLowerCase()}s/:id
+ * @desc    Delete ${name.toLowerCase()} by ID
+ * @access  Private
+ */
+router.delete('/:id', ${name}Controller.delete);
+
+module.exports = router;
+`
+};
+
+// Interface de linha de comando
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// Função principal
+function main() {
+  console.log('=== Gerador de Código Boilerplate ===');
+  console.log('Escolha o tipo de código para gerar:');
+  console.log('1. Componente React');
+  console.log('2. Controller Express');
+  console.log('3. Rota Express');
+  console.log('0. Sair');
+  
+  rl.question('Opção: ', (option) => {
+    switch (option) {
+      case '1':
+        generateReactComponent();
+        break;
+      case '2':
+        generateExpressController();
+        break;
+      case '3':
+        generateExpressRoute();
+        break;
+      case '0':
+        console.log('Até mais!');
+        rl.close();
+        break;
+      default:
+        console.log('Opção inválida!');
+        main();
+        break;
+    }
+  });
+}
+
+function generateReactComponent() {
+  rl.question('Nome do componente: ', (name) => {
+    if (!name) {
+      console.log('Nome inválido!');
+      return generateReactComponent();
+    }
+    
+    // Ajusta o nome para formato PascalCase
+    const componentName = name.charAt(0).toUpperCase() + name.slice(1);
+    const dir = `./src/components/${componentName}`;
+    
+    // Cria o diretório se não existir
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    // Cria os arquivos
+    fs.writeFileSync(path.join(dir, `${componentName}.jsx`), templates.reactComponent(componentName));
+    fs.writeFileSync(path.join(dir, `${componentName}.css`), templates.reactComponentCSS(componentName));
+    
+    console.log(`Componente ${componentName} criado com sucesso em ${dir}!`);
+    main();
+  });
+}
+
+function generateExpressController() {
+  rl.question('Nome do controller (singular): ', (name) => {
+    if (!name) {
+      console.log('Nome inválido!');
+      return generateExpressController();
+    }
+    
+    // Ajusta o nome para formato PascalCase
+    const controllerName = name.charAt(0).toUpperCase() + name.slice(1);
+    const dir = './src/controllers';
+    
+    // Cria o diretório se não existir
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    // Cria o arquivo
+    fs.writeFileSync(
+      path.join(dir, `${controllerName.toLowerCase()}.controller.js`),
+      templates.expressController(controllerName)
+    );
+    
+    console.log(`Controller ${controllerName} criado com sucesso em ${dir}!`);
+    main();
+  });
+}
+
+function generateExpressRoute() {
+  rl.question('Nome da rota (singular): ', (name) => {
+    if (!name) {
+      console.log('Nome inválido!');
+      return generateExpressRoute();
+    }
+    
+    // Ajusta o nome para formato PascalCase
+    const routeName = name.charAt(0).toUpperCase() + name.slice(1);
+    const dir = './src/routes';
+    
+    // Cria o diretório se não existir
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    // Cria o arquivo
+    fs.writeFileSync(
+      path.join(dir, `${routeName.toLowerCase()}.routes.js`),
+      templates.expressRoute(routeName)
+    );
+    
+    console.log(`Rota ${routeName} criada com sucesso em ${dir}!`);
+    main();
+  });
+}
+
+// Iniciar o programa
+main();</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conversion Scripts Tab -->
+        <div id="conversion-tab" class="tab-content">
+            <h3 class="mb-3">Scripts de Conversão</h3>
+            
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Conversor CSV para JSON</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Python</span>
+                            <span class="badge badge-light">Dados</span>
+                            <span class="badge badge-light">Conversão</span>
+                        </div>
+                        <p>Script Python para converter arquivos CSV para formato JSON.</p>
+                        
+                        <div class="code-block">
+                            <pre>
+# csv_to_json.py
+import csv
+import json
+import argparse
+import os
+
+def csv_to_json(csv_file_path, json_file_path=None, pretty=False):
+    """
+    Converte um arquivo CSV para JSON
+    
+    Args:
+        csv_file_path (str): Caminho para o arquivo CSV
+        json_file_path (str, opcional): Caminho para salvar o arquivo JSON. Se não for fornecido,
+                                       usa o mesmo nome do arquivo CSV com extensão .json
+        pretty (bool): Se True, formata o JSON com indentação para melhor legibilidade
+    
+    Returns:
+        str: Caminho para o arquivo JSON gerado
+    """
+    # Define o caminho de saída se não for especificado
+    if not json_file_path:
+        base_name = os.path.splitext(csv_file_path)[0]
+        json_file_path = f"{base_name}.json"
+    
+    # Lista para armazenar os dados
+    data = []
+    
+    try:
+        # Abre e lê o arquivo CSV
+        with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
+            # Cria um leitor CSV com detecção de cabeçalhos
+            csv_reader = csv.DictReader(csv_file)
+            
+            # Para cada linha no CSV
+            for row in csv_reader:
+                # Limpa os valores vazios e converte tipos quando possível
+                cleaned_row = {}
+                for key, value in row.items():
+                    # Ignora chaves vazias que podem surgir de colunas extras
+                    if key is None:
+                        continue
+                        
+                    # Tenta converter valores para tipos adequados (int, float)
+                    if value.strip() == '':
+                        cleaned_value = None
+                    elif value.isdigit():
+                        cleaned_value = int(value)
+                    else:
+                        try:
+                            cleaned_value = float(value)
+                        except ValueError:
+                            cleaned_value = value
+                            
+                    cleaned_row[key.strip()] = cleaned_value
+                
+                # Adiciona a linha processada à lista
+                data.append(cleaned_row)
+        
+        # Escreve os dados no arquivo JSON
+        with open(json_file_path, 'w', encoding='utf-8') as json_file:
+            if pretty:
+                json.dump(data, json_file, indent=4, ensure_ascii=False)
+            else:
+                json.dump(data, json_file, ensure_ascii=False)
+                
+        print(f"Conversão concluída! Arquivo salvo em: {json_file_path}")
+        print(f"Total de registros convertidos: {len(data)}")
+        return json_file_path
+        
+    except FileNotFoundError:
+        print(f"Erro: O arquivo '{csv_file_path}' não foi encontrado.")
+        return None
+    except Exception as e:
+        print(f"Erro durante a conversão: {str(e)}")
+        return None
+
+if __name__ == "__main__":
+    # Configuração do parser de argumentos
+    parser = argparse.ArgumentParser(description='Converte CSV para JSON')
+    parser.add_argument('csv_file', help='Caminho para o arquivo CSV')
+    parser.add_argument('-o', '--output', help='Caminho para salvar o arquivo JSON')
+    parser.add_argument('-p', '--pretty', action='store_true', help='Formata o JSON com indentação')
+    
+    args = parser.parse_args()
+    
+    # Executa a conversão
+    csv_to_json(args.csv_file, args.output, args.pretty)</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Conversor de Formatos de Imagem</h3>
+                        <div class="mb-3">
+                            <span class="badge badge-light">Python</span>
+                            <span class="badge badge-light">Pillow</span>
+                            <span class="badge badge-light">Conversão</span>
+                        </div>
+                        <p>Script Python para converter imagens entre diferentes formatos (JPG, PNG, WEBP, etc).</p>
+                        
+                        <div class="code-block">
+                            <pre>
+# image_converter.py
+from PIL import Image
+import os
+import argparse
+from pathlib import Path
+
+def convert_image(input_path, output_format, output_path=None, quality=90):
+    """
+    Converte uma imagem para o formato especificado
+    
+    Args:
+        input_path (str): Caminho para a imagem de entrada
+        output_format (str): Formato de saída (jpg, png, webp, etc.)
+        output_path (str, opcional): Caminho para salvar a imagem convertida
+        quality (int): Qualidade para formatos com compressão (0-100)
+    
+    Returns:
+        str: Caminho para a imagem convertida
+    """
+    try:
+        # Abre a imagem
+        with Image.open(input_path) as img:
+            # Define o caminho de saída se não for especificado
+            if not output_path:
+                input_file = Path(input_path)
+                output_path = str(input_file.with_suffix(f'.{output_format.lower()}'))
+            
+            # Converte a imagem
+            # Para PNG com transparência, preserve o canal alpha
+            if output_format.lower() == 'png' and img.mode in ('RGBA', 'LA'):
+                img = img.convert(img.mode)
+            # Para formatos sem suporte a transparência
+            elif output_format.lower() in ('jpg', 'jpeg') and img.mode in ('RGBA', 'LA', 'P'):
+                img = img.convert('RGB')
+            
+            # Define parâmetros específicos do formato
+            save_kwargs = {}
+            
+            if output_format.lower() in ('jpg', 'jpeg'):
+                save_kwargs = {'quality': quality, 'optimize': True}
+            elif output_format.lower() == 'png':
+                save_kwargs = {'optimize': True}
+            elif output_format.lower() == 'webp':
+                save_kwargs = {'quality': quality}
+            
+            # Salva a imagem convertida
+            img.save(output_path, **save_kwargs)
+            
+            return output_path
+    
+    except FileNotFoundError:
+        print(f"Erro: O arquivo '{input_path}' não foi encontrado.")
+        return None
+    except Exception as e:
+        print(f"Erro durante a conversão: {str(e)}")
+        return None
+
+def convert_directory(input_dir, output_format, output_dir=None, quality=90, recursive=False):
+    """
+    Converte todas as imagens em um diretório para o formato especificado
+    
+    Args:
+        input_dir (str): Diretório de entrada
+        output_format (str): Formato de saída
+        output_dir (str, opcional): Diretório de saída
+        quality (int): Qualidade para formatos com compressão
+        recursive (bool): Se True, processa subdiretórios recursivamente
+    
+    Returns:
+        int: Número de imagens convertidas com sucesso
+    """
+    # Formatos de imagem suportados
+    supported_formats = ['.jpg', '.jpeg', '.png', '.webp', '.bmp', '.tiff', '.gif']
+    
+    # Conta as conversões bem-sucedidas
+    successful_conversions = 0
+    
+    # Define o diretório de saída se não for especificado
+    if not output_dir:
+        output_dir = os.path.join(input_dir, f'converted_{output_format}')
+    
+    # Cria o diretório de saída se não existir
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Função para processar um único diretório
+    def process_directory(directory, rel_path=''):
+        nonlocal successful_conversions
+        
+        # Para cada item no diretório
+        for item in os.listdir(directory):
+            item_path = os.path.join(directory, item)
+            
+            # Se for um diretório e recursive=True, processa recursivamente
+            if os.path.isdir(item_path) and recursive:
+                new_rel_path = os.path.join(rel_path, item)
+                new_output_dir = os.path.join(output_dir, new_rel_path)
+                os.makedirs(new_output_dir, exist_ok=True)
+                process_directory(item_path, new_rel_path)
+            
+            # Se for um arquivo com extensão suportada
+            elif os.path.isfile(item_path):
+                file_ext = os.path.splitext(item)[1].lower()
+                if file_ext in supported_formats:
+                    # Define o caminho de saída
+                    output_filename = f"{os.path.splitext(item)[0]}.{output_format.lower()}"
+                    output_path = os.path.join(output_dir, rel_path, output_filename)
+                    
+                    # Converte a imagem
+                    result = convert_image(item_path, output_format, output_path, quality)
+                    if result:
+                        successful_conversions += 1
+    
+    # Inicia o processamento
+    process_directory(input_dir)
+    
+    return successful_conversions
+
+if __name__ == "__main__":
+    # Configuração do parser de argumentos
+    parser = argparse.ArgumentParser(description='Conversor de formatos de imagem')
+    parser.add_argument('input', help='Caminho para a imagem ou diretório de entrada')
+    parser.add_argument('format', help='Formato de saída (jpg, png, webp, etc.)')
+    parser.add_argument('-o', '--output', help='Caminho para salvar a imagem ou diretório convertido')
+    parser.add_argument('-q', '--quality', type=int, default=90, help='Qualidade para formatos com compressão (0-100)')
+    parser.add_argument('-r', '--recursive', action='store_true', help='Processa subdiretórios recursivamente')
+    
+    args = parser.parse_args()
+    
+    # Verifica se o input é um arquivo ou diretório
+    if os.path.isfile(args.input):
+        result = convert_image(args.input, args.format, args.output, args.quality)
+        if result:
+            print(f"Imagem convertida com sucesso: {result}")
+    
+    elif os.path.isdir(args.input):
+        count = convert_directory(args.input, args.format, args.output, args.quality, args.recursive)
+        print(f"{count} imagens convertidas com sucesso!")
+    
+    else:
+        print(f"Erro: '{args.input}' não é um arquivo ou diretório válido.")</pre>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-primary copy-code">Copiar Código</button>
+                            <a href="#" class="btn btn-sm btn-outline-primary ml-2">Ver Documentação</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scripts Resources Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recursos Adicionais</h2>
+            <p>Ferramentas e bibliotecas úteis para scripts de automação e produtividade</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-terminal mr-2 text-primary"></i> CLI Tools</h3>
+                    <p>Ferramentas de linha de comando para aumentar a produtividade do desenvolvedor.</p>
+                    <ul class="mt-3">
+                        <li><strong>Commander.js</strong> - Criação de CLIs em Node.js</li>
+                        <li><strong>Inquirer.js</strong> - Interfaces interativas de terminal</li>
+                        <li><strong>Click</strong> - Framework para CLIs em Python</li>
+                        <li><strong>ShellJS</strong> - Comandos Unix portáveis para Node.js</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-cogs mr-2 text-primary"></i> Automação</h3>
+                    <p>Bibliotecas e ferramentas para automação de tarefas repetitivas.</p>
+                    <ul class="mt-3">
+                        <li><strong>Gulp/Grunt</strong> - Automação de build para web</li>
+                        <li><strong>Ansible</strong> - Automação de infraestrutura</li>
+                        <li><strong>Puppeteer</strong> - Automação de navegador</li>
+                        <li><strong>Husky</strong> - Git hooks para automação</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-cloud mr-2 text-primary"></i> Cloud & DevOps</h3>
+                    <p>Ferramentas para automação de infraestrutura e processos de DevOps.</p>
+                    <ul class="mt-3">
+                        <li><strong>Terraform</strong> - Infraestrutura como código</li>
+                        <li><strong>AWS CLI</strong> - Controle da AWS via linha de comando</li>
+                        <li><strong>Jenkins</strong> - Automação de CI/CD</li>
+                        <li><strong>Docker Compose</strong> - Orquestração de containers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adicionar funcionalidade de copiar código
+        const copyButtons = document.querySelectorAll('.copy-code');
+        if (copyButtons.length > 0) {
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.closest('.card-body').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeBlock)
+                        .then(() => {
+                            const originalText = this.textContent;
+                            this.textContent = 'Copiado!';
+                            
+                            setTimeout(() => {
+                                this.textContent = originalText;
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Erro ao copiar código:', err);
+                        });
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+
+{% block title %}Descubra Seu Nível - CodeLab{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Descubra Seu Nível Profissional</h2>
+            <p>Avalie suas habilidades e descubra em qual nível de carreira você se encontra</p>
+        </div>
+    </div>
+</section>
+
+<!-- Level Finder Section -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2">
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">Avalie Suas Habilidades</h3>
+                        <p>Selecione as tecnologias e áreas em que você possui conhecimento e experiência.</p>
+                        
+                        <form id="level-finder-form" class="mt-4">
+                            <!-- Tecnologias -->
+                            <div class="form-group">
+                                <h4 class="mb-2">Tecnologias</h4>
+                                <div class="grid grid-3">
+                                    {% for tech in technologies %}
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="tech-{{ loop.index }}" name="technologies" value="{{ tech.name }}">
+                                        <label class="form-check-label" for="tech-{{ loop.index }}">{{ tech.name }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <!-- Áreas de Tecnologia -->
+                            <div class="form-group mt-4">
+                                <h4 class="mb-2">Áreas de Conhecimento</h4>
+                                <div class="grid grid-2">
+                                    {% for area_name, area_data in tech_areas.items() %}
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="area-{{ loop.index }}" name="tech_areas" value="{{ area_name }}">
+                                        <label class="form-check-label" for="area-{{ loop.index }}">{{ area_name }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <!-- Experiência -->
+                            <div class="form-group mt-4">
+                                <h4 class="mb-2">Experiência Profissional</h4>
+                                <select class="form-select" name="experience">
+                                    <option value="0">Menos de 1 ano</option>
+                                    <option value="1">1-2 anos</option>
+                                    <option value="3">3-5 anos</option>
+                                    <option value="6">6-8 anos</option>
+                                    <option value="9">9-12 anos</option>
+                                    <option value="13">Mais de 12 anos</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-lg mt-4">Avaliar Meu Nível</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div id="level-result" class="mb-4">
+                    <!-- O resultado da avaliação será exibido aqui -->
+                </div>
+                
+                <div id="recommendations" style="display: none;">
+                    <!-- Recomendações baseadas no nível serão exibidas aqui -->
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h3 class="mb-3">Como funciona?</h3>
+                        <p>Nossa avaliação de nível profissional é baseada nas habilidades, conhecimentos e experiência que você possui em desenvolvimento de software.</p>
+                        
+                        <h4 class="mt-4 mb-2">Níveis de Carreira</h4>
+                        <ul>
+                            <li><strong>Iniciante:</strong> Está começando na área, conhecimentos básicos de programação.</li>
+                            <li><strong>Estagiário:</strong> Em processo de aprendizado formal, aplica conhecimentos básicos.</li>
+                            <li><strong>Junior:</strong> Início de carreira, necessita de acompanhamento frequente.</li>
+                            <li><strong>Pleno:</strong> Profissional autônomo que resolve problemas sem supervisão constante.</li>
+                            <li><strong>Sênior:</strong> Referência técnica no time, capaz de tomar decisões arquiteturais.</li>
+                            <li><strong>Staff:</strong> Influencia múltiplos times com decisões técnicas de alto impacto.</li>
+                            <li><strong>Especialista:</strong> Autoridade reconhecida em áreas específicas da tecnologia.</li>
+                        </ul>
+                        
+                        <p class="mt-3">Após a avaliação, você receberá uma análise detalhada do seu nível profissional atual e recomendações personalizadas para evoluir na carreira.</p>
+                        
+                        <div class="mt-4">
+                            <a href="/skill-level" class="btn btn-outline-primary">Ver Detalhes de Cada Nível</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>O Que Dizem Nossos Usuários</h2>
+            <p>Desenvolvedores que utilizaram nossa ferramenta de avaliação de nível</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p>"A avaliação de nível foi extremamente precisa e me ajudou a identificar as áreas em que precisava melhorar. As recomendações foram personalizadas e práticas."</p>
+                    <div class="mt-3">
+                        <strong>Carlos Silva</strong>
+                        <div>Desenvolvedor Backend</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p>"Como iniciante, eu não tinha ideia de quais habilidades desenvolver primeiro. O CodeLab me deu um roadmap claro para evoluir de iniciante para desenvolvedor júnior."</p>
+                    <div class="mt-3">
+                        <strong>Fernanda Santos</strong>
+                        <div>Estudante de Programação</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star-half-alt text-warning"></i>
+                    </div>
+                    <p>"Mesmo como desenvolvedor sênior, a ferramenta me ajudou a identificar gaps de conhecimento e me deu insights valiosos para chegar ao nível de especialista na minha área."</p>
+                    <div class="mt-3">
+                        <strong>Rafael Mendes</strong>
+                        <div>Tech Lead</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Next Steps Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Próximos Passos</h2>
+            <p>Após descobrir seu nível, continue sua jornada de aprendizado</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Roadmap Personalizado</h3>
+                    <p>Siga um roadmap adaptado ao seu nível e objetivos de carreira.</p>
+                    <a href="/roadmap" class="btn btn-primary mt-3">Ver Roadmap</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Exercícios Práticos</h3>
+                    <p>Pratique com exercícios alinhados ao seu nível de habilidade.</p>
+                    <a href="/practice" class="btn btn-primary mt-3">Praticar Agora</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Vagas Compatíveis</h3>
+                    <p>Encontre oportunidades de trabalho adequadas ao seu nível.</p>
+                    <a href="/jobs" class="btn btn-primary mt-3">Ver Vagas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

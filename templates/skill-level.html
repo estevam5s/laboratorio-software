@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+
+{% block title %}Níveis de Carreira - CodeLab{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Níveis de Carreira em Desenvolvimento</h2>
+            <p>Entenda as características, requisitos e expectativas de cada nível profissional</p>
+        </div>
+    </div>
+</section>
+
+<!-- Levels Overview Section -->
+<section class="section">
+    <div class="container">
+        <div class="card mb-5">
+            <div class="card-body">
+                <h3 class="mb-3">Visão Geral dos Níveis</h3>
+                <p>A carreira em desenvolvimento de software é geralmente dividida em diferentes níveis que refletem a experiência, conhecimento técnico, independência e impacto do profissional. Estes níveis representam uma progressão natural na carreira, desde os primeiros passos até posições de liderança e especialização.</p>
+                
+                <div class="alert alert-info mt-3">
+                    <p><strong>Nota:</strong> Estes níveis podem variar entre empresas e mercados, mas representam uma visão geral da indústria de tecnologia.</p>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <a href="/level-finder" class="btn btn-primary">Descubra Seu Nível</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Levels -->
+        {% for level, data in levels.items() %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>{{ level }}</h2>
+            </div>
+            <div class="card-body">
+                <h3 class="mb-3">Descrição</h3>
+                <p>{{ data.description }}</p>
+                
+                <h3 class="mt-4 mb-3">Requisitos e Habilidades</h3>
+                <ul>
+                    {% for req in data.requirements %}
+                    <li>{{ req }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="grid grid-2 mt-4">
+                    <div>
+                        <h3 class="mb-3">Experiência Típica</h3>
+                        <p><strong>{{ data.experience }}</strong></p>
+                    </div>
+                    <div>
+                        <h3 class="mb-3">Autonomia e Impacto</h3>
+                        <p>{% if level == 'Iniciante' %}
+                            Trabalha sob supervisão direta, completa tarefas simples e bem definidas.
+                        {% elif level == 'Estagiário' %}
+                            Trabalha sob supervisão frequente, contribui com componentes pequenos.
+                        {% elif level == 'Junior' %}
+                            Trabalha com supervisão regular, implementa funcionalidades independentes.
+                        {% elif level == 'Pleno' %}
+                            Trabalha com supervisão ocasional, lidera implementações completas.
+                        {% elif level == 'Sênior' %}
+                            Trabalha de forma independente, influencia decisões arquiteturais e de design.
+                        {% elif level == 'Staff' %}
+                            Lidera tecnicamente múltiplos times, define direções estratégicas.
+                        {% elif level == 'Especialista' %}
+                            Define padrões e melhores práticas, influencia a indústria.
+                        {% endif %}</p>
+                    </div>
+                </div>
+                
+                <h3 class="mt-4 mb-3">Responsabilidades</h3>
+                <div class="grid grid-2">
+                    <div>
+                        <h4 class="mb-2">Técnicas</h4>
+                        <ul>
+                            {% if level == 'Iniciante' %}
+                            <li>Aprender conceitos básicos de programação</li>
+                            <li>Implementar funcionalidades simples</li>
+                            <li>Seguir padrões de código estabelecidos</li>
+                            <li>Corrigir bugs simples</li>
+                            {% elif level == 'Estagiário' %}
+                            <li>Desenvolver componentes pequenos</li>
+                            <li>Escrever testes unitários básicos</li>
+                            <li>Entender e aplicar padrões de código</li>
+                            <li>Corrigir bugs de complexidade moderada</li>
+                            {% elif level == 'Junior' %}
+                            <li>Implementar funcionalidades completas</li>
+                            <li>Escrever testes abrangentes</li>
+                            <li>Revisar código de outros desenvolvedores</li>
+                            <li>Corrigir bugs complexos</li>
+                            {% elif level == 'Pleno' %}
+                            <li>Implementar funcionalidades complexas</li>
+                            <li>Projetar componentes de software</li>
+                            <li>Otimizar performance</li>
+                            <li>Refatorar código legado</li>
+                            {% elif level == 'Sênior' %}
+                            <li>Arquitetar sistemas completos</li>
+                            <li>Definir padrões técnicos</li>
+                            <li>Implementar soluções escaláveis</li>
+                            <li>Resolver problemas técnicos complexos</li>
+                            {% elif level == 'Staff' %}
+                            <li>Definir arquitetura de sistemas distribuídos</li>
+                            <li>Estabelecer padrões técnicos para a organização</li>
+                            <li>Tomar decisões técnicas estratégicas</li>
+                            <li>Resolver desafios técnicos críticos</li>
+                            {% elif level == 'Especialista' %}
+                            <li>Inovar em áreas técnicas específicas</li>
+                            <li>Influenciar direções tecnológicas da indústria</li>
+                            <li>Criar soluções para problemas inéditos</li>
+                            <li>Estabelecer melhores práticas de ponta</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="mb-2">Não-Técnicas</h4>
+                        <ul>
+                            {% if level == 'Iniciante' %}
+                            <li>Comunicar progresso e desafios</li>
+                            <li>Colaborar com o time</li>
+                            <li>Buscar ativamente conhecimento</li>
+                            <li>Receber e aplicar feedback</li>
+                            {% elif level == 'Estagiário' %}
+                            <li>Documentar seu trabalho</li>
+                            <li>Participar ativamente em reuniões</li>
+                            <li>Compartilhar conhecimento com pares</li>
+                            <li>Organizar seu trabalho e tempo</li>
+                            {% elif level == 'Junior' %}
+                            <li>Estimar tarefas com precisão moderada</li>
+                            <li>Comunicar decisões técnicas</li>
+                            <li>Colaborar com outras disciplinas</li>
+                            <li>Propor melhorias de processos</li>
+                            {% elif level == 'Pleno' %}
+                            <li>Estimar projetos com boa precisão</li>
+                            <li>Apresentar soluções técnicas</li>
+                            <li>Apoiar desenvolvedores menos experientes</li>
+                            <li>Participar ativamente no planejamento</li>
+                            {% elif level == 'Sênior' %}
+                            <li>Mentorar desenvolvedores</li>
+                            <li>Comunicar com stakeholders</li>
+                            <li>Influenciar decisões do time</li>
+                            <li>Contribuir para planejamento estratégico</li>
+                            {% elif level == 'Staff' %}
+                            <li>Liderar iniciativas técnicas</li>
+                            <li>Influenciar múltiplas equipes</li>
+                            <li>Comunicar visão técnica para a liderança</li>
+                            <li>Representar a organização em eventos</li>
+                            {% elif level == 'Especialista' %}
+                            <li>Desenvolver outros profissionais</li>
+                            <li>Influenciar a direção da organização</li>
+                            <li>Representar a empresa externamente</li>
+                            <li>Contribuir para a comunidade técnica</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 class="mt-4 mb-3">Próximos Passos para Evolução</h3>
+                <div class="alert alert-success">
+                    <h4 class="mb-2">Para avançar para o próximo nível, foque em:</h4>
+                    <ul>
+                        {% if level == 'Iniciante' %}
+                        <li>Dominar uma linguagem de programação</li>
+                        <li>Aprofundar conhecimentos em estruturas de dados e algoritmos</li>
+                        <li>Iniciar estudos em padrões de design</li>
+                        <li>Contribuir com projetos reais</li>
+                        {% elif level == 'Estagiário' %}
+                        <li>Desenvolver habilidades em frameworks populares</li>
+                        <li>Aprender sobre arquitetura de software</li>
+                        <li>Aprofundar conhecimentos em bancos de dados</li>
+                        <li>Melhorar capacidade de resolução independente de problemas</li>
+                        {% elif level == 'Junior' %}
+                        <li>Desenvolver autonomia na implementação de sistemas</li>
+                        <li>Aprofundar conhecimentos em padrões arquiteturais</li>
+                        <li>Aprender sobre otimização e performance</li>
+                        <li>Melhorar capacidade de estimar e planejar</li>
+                        {% elif level == 'Pleno' %}
+                        <li>Desenvolver habilidades de liderança técnica</li>
+                        <li>Aprofundar conhecimentos em arquitetura distribuída</li>
+                        <li>Aprender sobre escalabilidade e resiliência</li>
+                        <li>Desenvolver mentorias e code reviews efetivos</li>
+                        {% elif level == 'Sênior' %}
+                        <li>Expandir impacto para múltiplos times</li>
+                        <li>Aprofundar conhecimentos em arquitetura de sistemas complexos</li>
+                        <li>Desenvolver influência técnica na organização</li>
+                        <li>Contribuir para decisões estratégicas</li>
+                        {% elif level == 'Staff' %}
+                        <li>Especializar-se em áreas técnicas específicas</li>
+                        <li>Desenvolver influência na indústria</li>
+                        <li>Contribuir com projetos open source ou publicações</li>
+                        <li>Participar de comunidades técnicas</li>
+                        {% elif level == 'Especialista' %}
+                        <li>Continuar aprendizado contínuo</li>
+                        <li>Expandir influência na indústria</li>
+                        <li>Mentorar líderes técnicos</li>
+                        <li>Contribuir para o avanço do estado da arte</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Resources Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recursos para Evolução Profissional</h2>
+            <p>Ferramentas e conteúdos para ajudar no seu desenvolvimento de carreira</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Avaliação de Nível</h3>
+                    <p>Descubra seu nível atual baseado em suas habilidades e experiência.</p>
+                    <a href="/level-finder" class="btn btn-primary mt-3">Avaliar Agora</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Roadmap Personalizado</h3>
+                    <p>Siga um caminho de aprendizado adaptado ao seu nível e objetivos.</p>
+                    <a href="/roadmap" class="btn btn-primary mt-3">Ver Roadmap</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Exercícios e Projetos</h3>
+                    <p>Pratique com desafios adequados ao seu nível de habilidade.</p>
+                    <a href="/practice" class="btn btn-primary mt-3">Praticar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

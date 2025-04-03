@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CodeLab - Laboratório de Desenvolvimento{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <span class="logo-text">Code<span class="highlight">Lab</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="/laboratory" class="nav-link"><i class="fas fa-flask"></i> Laboratório</a></li>
+                    <li><a href="/roadmap" class="nav-link"><i class="fas fa-map"></i> Roadmap</a></li>
+                    <li><a href="/codes" class="nav-link"><i class="fas fa-code"></i> Códigos</a></li>
+                    <li><a href="/practice" class="nav-link"><i class="fas fa-laptop-code"></i> Prática</a></li>
+                    <li><a href="/scripts" class="nav-link"><i class="fas fa-file-code"></i> Scripts</a></li>
+                    <li><a href="/jobs" class="nav-link"><i class="fas fa-briefcase"></i> Vagas</a></li>
+                    <li><a href="/skill-level" class="nav-link"><i class="fas fa-graduation-cap"></i> Níveis</a></li>
+                    <li><a href="/level-finder" class="nav-link"><i class="fas fa-search"></i> Descubra seu Nível</a></li>
+                    <li><a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 class="footer-heading">CodeLab</h3>
+                    <p>Um laboratório completo para engenheiros de software aprimorarem suas habilidades e conhecimentos.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-heading">Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="/laboratory">Laboratório</a></li>
+                        <li><a href="/roadmap">Roadmap</a></li>
+                        <li><a href="/level-finder">Descubra seu Nível</a></li>
+                        <li><a href="/jobs">Vagas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-heading">Recursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="/codes">Exemplos de Código</a></li>
+                        <li><a href="/practice">Exercícios Práticos</a></li>
+                        <li><a href="/scripts">Scripts Úteis</a></li>
+                        <li><a href="/skill-level">Níveis de Carreira</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-heading">Contato</h3>
+                    <p>contato@codelab.com</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 CodeLab. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+
+{% block title %}Prática e Exercícios - CodeLab{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Prática e Exercícios</h2>
+            <p>Aprimore suas habilidades com exercícios e projetos práticos</p>
+        </div>
+    </div>
+</section>
+
+<!-- Practice Content Section -->
+<section class="section">
+    <div class="container">
+        <!-- Practice Filters -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="grid grid-2">
+                    <div>
+                        <h3 class="mb-3">Selecione a Tecnologia</h3>
+                        <div class="form-group">
+                            <select class="form-select tech-selector">
+                                {% for tech in technologies %}
+                                <option value="{{ tech.name }}">{{ tech.name }} ({{ tech.type }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="level-selector-container">
+                        <h3 class="mb-3">Selecione o Nível</h3>
+                        <div class="form-group">
+                            <select class="form-select level-selector">
+                                <option value="Básico">Básico</option>
+                                <option value="Intermediário">Intermediário</option>
+                                <option value="Avançado">Avançado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab-list">
+                <div class="tab-item active" data-target="exercises-tab">Exercícios</div>
+                <div class="tab-item" data-target="projects-tab">Projetos</div>
+            </div>
+            
+            <!-- Exercises Tab -->
+            <div id="exercises-tab" class="tab-content active">
+                <div id="exercises-container">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Carregando exercícios...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Tab -->
+            <div id="projects-tab" class="tab-content">
+                <div id="projects-container">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Carregando projetos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Practice Tips Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Dicas para Prática Eficiente</h2>
+            <p>Maximize seu aprendizado durante os exercícios e projetos</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-calendar-check mr-2 text-primary"></i> Consistência</h3>
+                    <p>Pratique regularmente, mesmo que por períodos curtos. A consistência é mais importante que sessões longas e esporádicas.</p>
+                    <ul class="mt-3">
+                        <li>Estabeleça uma rotina diária</li>
+                        <li>Defina metas realistas</li>
+                        <li>Acompanhe seu progresso</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-project-diagram mr-2 text-primary"></i> Projetos Completos</h3>
+                    <p>Desenvolva projetos do início ao fim para compreender todo o ciclo de desenvolvimento e enfrentar desafios reais.</p>
+                    <ul class="mt-3">
+                        <li>Defina o escopo claramente</li>
+                        <li>Divida em etapas menores</li>
+                        <li>Documente seu processo</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-code-branch mr-2 text-primary"></i> Varie os Desafios</h3>
+                    <p>Trabalhe com diferentes tipos de problemas para desenvolver um conjunto amplo de habilidades.</p>
+                    <ul class="mt-3">
+                        <li>Alterne entre exercícios algorítmicos e projetos</li>
+                        <li>Experimente diferentes frameworks</li>
+                        <li>Tente implementar a mesma solução de formas diferentes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-search mr-2 text-primary"></i> Analise Código</h3>
+                    <p>Estude código de qualidade para aprender padrões e melhores práticas da indústria.</p>
+                    <ul class="mt-3">
+                        <li>Leia código de projetos open source</li>
+                        <li>Observe como os problemas são resolvidos</li>
+                        <li>Compare sua solução com outras abordagens</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-tasks mr-2 text-primary"></i> Comece Simples</h3>
+                    <p>Inicie com problemas que você consegue resolver e aumente gradualmente a complexidade.</p>
+                    <ul class="mt-3">
+                        <li>Estabeleça uma base sólida</li>
+                        <li>Avance para desafios mais difíceis</li>
+                        <li>Não se intimide com problemas complexos</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-users mr-2 text-primary"></i> Feedback</h3>
+                    <p>Busque avaliação do seu código para identificar áreas de melhoria e aprender novas técnicas.</p>
+                    <ul class="mt-3">
+                        <li>Participe de code reviews</li>
+                        <li>Compartilhe suas soluções em fórums</li>
+                        <li>Esteja aberto a críticas construtivas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Practice Roadmap Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Roteiro de Prática</h2>
+            <p>Siga este roadmap para evoluir suas habilidades de forma estruturada</p>
+        </div>
+        
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <div class="roadmap-marker">
+                    <i class="fas fa-1"></i>
+                </div>
+                <div class="roadmap-content">
+                    <h3>Fundamentos</h3>
+                    <p>Domine os conceitos básicos da tecnologia escolhida.</p>
+                    <ul class="mt-3">
+                        <li>Complete exercícios de nível básico</li>
+                        <li>Implemente pequenos projetos guiados</li>
+                        <li>Familiarize-se com a sintaxe e estruturas</li>
+                        <li>Aprenda a usar as ferramentas básicas</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-marker">
+                    <i class="fas fa-2"></i>
+                </div>
+                <div class="roadmap-content">
+                    <h3>Aplicações Simples</h3>
+                    <p>Crie aplicações funcionais que resolvam problemas reais.</p>
+                    <ul class="mt-3">
+                        <li>Desenvolva projetos de nível intermediário</li>
+                        <li>Implemente funcionalidades comuns</li>
+                        <li>Integre APIs externas</li>
+                        <li>Pratique boas práticas de código</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-marker">
+                    <i class="fas fa-3"></i>
+                </div>
+                <div class="roadmap-content">
+                    <h3>Projetos Complexos</h3>
+                    <p>Desenvolva aplicações mais sofisticadas com múltiplos componentes.</p>
+                    <ul class="mt-3">
+                        <li>Implemente arquiteturas escaláveis</li>
+                        <li>Trabalhe com bancos de dados</li>
+                        <li>Desenvolva interfaces e experiências de usuário</li>
+                        <li>Implemente autenticação e autorização</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-marker">
+                    <i class="fas fa-4"></i>
+                </div>
+                <div class="roadmap-content">
+                    <h3>Otimização e Especialização</h3>
+                    <p>Refine suas habilidades em áreas específicas e otimize suas aplicações.</p>
+                    <ul class="mt-3">
+                        <li>Implemente técnicas de otimização de performance</li>
+                        <li>Aprenda padrões avançados de design</li>
+                        <li>Trabalhe com sistemas distribuídos</li>
+                        <li>Implemente CI/CD e automação</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-marker">
+                    <i class="fas fa-5"></i>
+                </div>
+                <div class="roadmap-content">
+                    <h3>Maestria e Contribuição</h3>
+                    <p>Alcance maestria técnica e contribua para a comunidade.</p>
+                    <ul class="mt-3">
+                        <li>Desenvolva projetos originais e inovadores</li>
+                        <li>Contribua para projetos open source</li>
+                        <li>Compartilhe conhecimento através de artigos ou palestras</li>
+                        <li>Mentor outros desenvolvedores</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Community Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Aprenda com a Comunidade</h2>
+            <p>Conecte-se com outros desenvolvedores para expandir seu aprendizado</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Fóruns de Discussão</h3>
+                    <p>Participe de discussões técnicas, tire dúvidas e compartilhe conhecimento com outros desenvolvedores.</p>
+                    <a href="#" class="btn btn-primary mt-3">Acessar Fóruns</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Projetos Colaborativos</h3>
+                    <p>Trabalhe em projetos com outros desenvolvedores para aprender novas técnicas e práticas de colaboração.</p>
+                    <a href="#" class="btn btn-primary mt-3">Ver Projetos</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Desafios e Competições</h3>
+                    <p>Participe de desafios de programação para testar suas habilidades e aprender com outros competidores.</p>
+                    <a href="#" class="btn btn-primary mt-3">Ver Desafios</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Atualiza a exibição quando a aba "Projetos" é clicada
+        const projectsTab = document.querySelector('[data-target="projects-tab"]');
+        if (projectsTab) {
+            projectsTab.addEventListener('click', function() {
+                const techSelector = document.querySelector('.tech-selector');
+                // Oculta o seletor de nível quando estiver na aba de projetos
+                document.getElementById('level-selector-container').style.display = 'none';
+                // Carrega os projetos
+                loadProjects(techSelector.value);
+            });
+        }
+        
+        // Atualiza a exibição quando a aba "Exercícios" é clicada
+        const exercisesTab = document.querySelector('[data-target="exercises-tab"]');
+        if (exercisesTab) {
+            exercisesTab.addEventListener('click', function() {
+                const techSelector = document.querySelector('.tech-selector');
+                const levelSelector = document.querySelector('.level-selector');
+                // Mostra o seletor de nível quando estiver na aba de exercícios
+                document.getElementById('level-selector-container').style.display = 'block';
+                // Carrega os exercícios
+                loadExercisesOrCodes(techSelector.value, levelSelector.value);
+            });
+        }
+        
+        // Carrega os exercícios iniciais ao carregar a página
+        const techSelector = document.querySelector('.tech-selector');
+        const levelSelector = document.querySelector('.level-selector');
+        if (techSelector && levelSelector) {
+            loadExercisesOrCodes(techSelector.value, levelSelector.value);
+        }
+    });
+</script>
+{% endblock %}

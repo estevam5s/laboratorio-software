@@ -1,0 +1,110 @@
+2025-04-03 01:03:35,786 - codelab - INFO - CodeLab iniciado em http://127.0.0.1:5000 - Versão: 1.0.0 - Data: 2025-04-03 01:03:35
+2025-04-03 01:03:35,819 - werkzeug - WARNING -  * Debugger is active!
+2025-04-03 01:03:35,863 - werkzeug - INFO -  * Debugger PIN: 143-080-532
+2025-04-03 01:03:40,926 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:40] "GET /laboratory HTTP/1.1" 200 -
+2025-04-03 01:03:41,213 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:41] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:41,225 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:03:41,766 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:03:41,768 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:41] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:03:41,775 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:03:41,776 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:41] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:03:45,048 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:45] "GET /laboratory HTTP/1.1" 200 -
+2025-04-03 01:03:45,181 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:03:45,192 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:45] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:45,278 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:03:45,280 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:45] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:03:45,286 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:03:45,287 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:45] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:03:46,837 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:46] "GET /roadmap HTTP/1.1" 200 -
+2025-04-03 01:03:47,000 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:46] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:03:47,004 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:47] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:47,963 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:47] "GET /codes HTTP/1.1" 200 -
+2025-04-03 01:03:48,214 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:48] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:03:48,220 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:48] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:49,471 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:49] "GET /practice HTTP/1.1" 200 -
+2025-04-03 01:03:49,682 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:03:49,689 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:50,820 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:50] "GET /scripts HTTP/1.1" 200 -
+2025-04-03 01:03:51,014 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:03:51,022 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:51] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:52,178 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:52] "GET /jobs HTTP/1.1" 200 -
+2025-04-03 01:03:52,370 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:52] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:03:52,372 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:03:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:03,770 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:03] "GET /level-finder HTTP/1.1" 200 -
+2025-04-03 01:04:03,894 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:03] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:03,896 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:05,809 - codelab - INFO - Acessando página sobre
+2025-04-03 01:04:05,823 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:05] "GET /about HTTP/1.1" 200 -
+2025-04-03 01:04:05,954 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:05,970 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:05] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:07,477 - codelab - INFO - Acessando página inicial
+2025-04-03 01:04:07,491 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:07] "GET / HTTP/1.1" 200 -
+2025-04-03 01:04:07,651 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:07,663 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:07,909 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:07] "GET /api/technologies HTTP/1.1" 200 -
+2025-04-03 01:04:08,339 - codelab - INFO - Acessando página inicial
+2025-04-03 01:04:08,340 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:08] "GET / HTTP/1.1" 200 -
+2025-04-03 01:04:08,432 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:08] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:08,443 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:08] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:08,515 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:08] "GET /api/technologies HTTP/1.1" 200 -
+2025-04-03 01:04:09,319 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:09] "GET /laboratory HTTP/1.1" 200 -
+2025-04-03 01:04:09,486 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:09] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:09,491 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:09] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:09,760 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:04:09,761 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:09] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:04:09,768 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:04:09,770 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:09] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:04:10,084 - codelab - INFO - Acessando página inicial
+2025-04-03 01:04:10,086 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:10] "GET / HTTP/1.1" 200 -
+2025-04-03 01:04:10,222 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:10,228 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:10] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:10,330 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:10] "GET /api/technologies HTTP/1.1" 200 -
+2025-04-03 01:04:17,555 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:17] "GET /practice HTTP/1.1" 200 -
+2025-04-03 01:04:17,708 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:17] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:04:17,724 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:17] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:04:22,253 - codelab - INFO - API: Buscando exercícios para React nível Básico
+2025-04-03 01:04:22,255 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:22] "GET /api/exercises/React/Básico HTTP/1.1" 200 -
+2025-04-03 01:04:32,856 - codelab - INFO - API: Buscando exercícios para MongoDB nível Básico
+2025-04-03 01:04:32,857 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:32] "GET /api/exercises/MongoDB/Básico HTTP/1.1" 200 -
+2025-04-03 01:04:34,909 - codelab - INFO - API: Buscando exercícios para Flask nível Básico
+2025-04-03 01:04:34,910 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:34] "GET /api/exercises/Flask/Básico HTTP/1.1" 200 -
+2025-04-03 01:04:36,741 - codelab - INFO - API: Buscando exercícios para Azure nível Básico
+2025-04-03 01:04:36,743 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:36] "GET /api/exercises/Azure/Básico HTTP/1.1" 200 -
+2025-04-03 01:04:39,706 - codelab - INFO - API: Buscando exercícios para AWS nível Básico
+2025-04-03 01:04:39,707 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:39] "GET /api/exercises/AWS/Básico HTTP/1.1" 200 -
+2025-04-03 01:04:42,279 - codelab - INFO - API: Buscando exercícios para AWS nível Avançado
+2025-04-03 01:04:42,282 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:42] "GET /api/exercises/AWS/Avançado HTTP/1.1" 200 -
+2025-04-03 01:04:49,399 - codelab - INFO - API: Buscando exercícios para AWS nível Intermediário
+2025-04-03 01:04:49,402 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:49] "GET /api/exercises/AWS/Intermediário HTTP/1.1" 200 -
+2025-04-03 01:04:57,670 - codelab - INFO - API: Buscando exercícios para NestJS nível Intermediário
+2025-04-03 01:04:57,671 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:04:57] "GET /api/exercises/NestJS/Intermediário HTTP/1.1" 200 -
+2025-04-03 01:05:08,482 - codelab - INFO - API: Buscando exercícios para NestJS nível Básico
+2025-04-03 01:05:08,484 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:08] "GET /api/exercises/NestJS/Básico HTTP/1.1" 200 -
+2025-04-03 01:05:18,490 - codelab - INFO - API: Buscando exercícios para MongoDB nível Básico
+2025-04-03 01:05:18,492 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:18] "GET /api/exercises/MongoDB/Básico HTTP/1.1" 200 -
+2025-04-03 01:05:20,796 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:20] "GET /codes HTTP/1.1" 200 -
+2025-04-03 01:05:20,954 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:05:20,972 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:20] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:05:24,978 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:24] "GET /scripts HTTP/1.1" 200 -
+2025-04-03 01:05:25,124 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:05:25,133 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:05:41,375 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:41] "GET /roadmap HTTP/1.1" 200 -
+2025-04-03 01:05:41,547 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:41] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:05:41,547 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:05:51,526 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:51] "GET /laboratory HTTP/1.1" 200 -
+2025-04-03 01:05:51,692 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:05:51,700 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:51] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:05:51,931 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:05:51,933 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:51] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:05:51,981 - codelab - INFO - API: Buscando cursos para Node.js
+2025-04-03 01:05:51,982 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:51] "GET /api/courses/Node.js HTTP/1.1" 200 -
+2025-04-03 01:05:55,610 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:55] "GET /codes HTTP/1.1" 200 -
+2025-04-03 01:05:55,758 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:55] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:05:55,765 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:55] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:05:58,282 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:58] "GET /practice HTTP/1.1" 200 -
+2025-04-03 01:05:58,412 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:58] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-03 01:05:58,420 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:05:58] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-03 01:06:05,258 - codelab - INFO - API: Buscando exercícios para Node.js nível Intermediário
+2025-04-03 01:06:05,260 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:06:05] "GET /api/exercises/Node.js/Intermediário HTTP/1.1" 200 -
+2025-04-03 01:06:06,930 - codelab - INFO - API: Buscando exercícios para Node.js nível Básico
+2025-04-03 01:06:06,932 - werkzeug - INFO - 127.0.0.1 - - [03/Apr/2025 01:06:06] "GET /api/exercises/Node.js/Básico HTTP/1.1" 200 -

@@ -1,0 +1,633 @@
+{% extends 'base.html' %}
+
+{% block title %}Exemplos de Código - CodeLab{% endblock %}
+
+{% block extra_css %}
+<style>
+    .code-block {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+    
+    .code-language-badge {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Exemplos de Código</h2>
+            <p>Explore exemplos práticos de código para diferentes tecnologias e níveis</p>
+        </div>
+    </div>
+</section>
+
+<!-- Code Examples Section -->
+<section class="section">
+    <div class="container">
+        <!-- Code Filters -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="grid grid-2">
+                    <div>
+                        <h3 class="mb-3">Selecione a Tecnologia</h3>
+                        <div class="form-group">
+                            <select class="form-select tech-selector" id="tech-selector">
+                                {% for tech in technologies %}
+                                <option value="{{ tech.name }}">{{ tech.name }} ({{ tech.type }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="mb-3">Selecione o Nível</h3>
+                        <div class="form-group">
+                            <select class="form-select level-selector" id="level-selector">
+                                <option value="Básico">Básico</option>
+                                <option value="Intermediário">Intermediário</option>
+                                <option value="Avançado">Avançado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="load-example-btn" class="btn btn-primary mt-3">Carregar Exemplo</button>
+            </div>
+        </div>
+        
+        <!-- Code Examples Container -->
+        <div id="code-examples-container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <p>Selecione uma tecnologia e nível acima, e clique em "Carregar Exemplo" para ver o código.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Default examples for immediate display -->
+        <div id="default-examples" class="mt-5">
+            <h3 class="mb-4">Exemplos Populares</h3>
+            
+            <!-- Node.js Básico -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="flex justify-between align-center">
+                        <h3>Exemplo Básico de Node.js</h3>
+                        <span class="badge badge-success">Básico</span>
+                    </div>
+                </div>
+                <div class="card-body position-relative">
+                    <span class="badge badge-light code-language-badge">JavaScript</span>
+                    <pre class="code-block"><code>// Hello World em Node.js
+console.log('Hello, World!');
+
+// Servidor HTTP básico
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World');
+});
+
+server.listen(3000, () => {
+  console.log('Servidor rodando em http://localhost:3000/');
+});</code></pre>
+                    <div class="mt-3">
+                        <p><strong>Descrição:</strong> Este exemplo demonstra como criar um servidor HTTP básico em Node.js que responde com "Hello World" quando acessado.</p>
+                        <button class="btn btn-sm btn-primary copy-code" data-target="node-basic">Copiar Código</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Express Intermediário -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="flex justify-between align-center">
+                        <h3>API REST com Express</h3>
+                        <span class="badge badge-warning">Intermediário</span>
+                    </div>
+                </div>
+                <div class="card-body position-relative">
+                    <span class="badge badge-light code-language-badge">JavaScript</span>
+                    <pre class="code-block"><code>// API REST com Express
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(express.json());
+
+// Simulando um banco de dados
+let users = [
+  { id: 1, name: 'Alice', email: 'alice@example.com' },
+  { id: 2, name: 'Bob', email: 'bob@example.com' }
+];
+
+// Rotas
+app.get('/users', (req, res) => {
+  res.json(users);
+});
+
+app.get('/users/:id', (req, res) => {
+  const user = users.find(u => u.id === parseInt(req.params.id));
+  if (!user) return res.status(404).json({ message: 'User not found' });
+  res.json(user);
+});
+
+app.post('/users', (req, res) => {
+  const user = {
+    id: users.length + 1,
+    name: req.body.name,
+    email: req.body.email
+  };
+  users.push(user);
+  res.status(201).json(user);
+});
+
+app.put('/users/:id', (req, res) => {
+  const user = users.find(u => u.id === parseInt(req.params.id));
+  if (!user) return res.status(404).json({ message: 'User not found' });
+  
+  user.name = req.body.name;
+  user.email = req.body.email;
+  
+  res.json(user);
+});
+
+app.delete('/users/:id', (req, res) => {
+  const userIndex = users.findIndex(u => u.id === parseInt(req.params.id));
+  if (userIndex === -1) return res.status(404).json({ message: 'User not found' });
+  
+  users.splice(userIndex, 1);
+  res.status(204).end();
+});
+
+app.listen(port, () => {
+  console.log(`API running at http://localhost:${port}`);
+});</code></pre>
+                    <div class="mt-3">
+                        <p><strong>Descrição:</strong> Este exemplo mostra como criar uma API REST completa com Express, incluindo rotas para operações CRUD (Create, Read, Update, Delete).</p>
+                        <button class="btn btn-sm btn-primary copy-code" data-target="express-intermediate">Copiar Código</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NestJS Avançado -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="flex justify-between align-center">
+                        <h3>Autenticação com NestJS</h3>
+                        <span class="badge badge-danger">Avançado</span>
+                    </div>
+                </div>
+                <div class="card-body position-relative">
+                    <span class="badge badge-light code-language-badge">TypeScript</span>
+                    <pre class="code-block"><code>// auth.module.ts
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
+import { AuthController } from './auth.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+@Module({
+  imports: [
+    UsersModule,
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1h' },
+      }),
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
+  exports: [AuthService],
+})
+export class AuthModule {}
+
+// auth.service.ts
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
+
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.usersService.findByUsername(username);
+    if (user && await bcrypt.compare(password, user.password)) {
+      const { password, ...result } = user;
+      return result;
+    }
+    return null;
+  }
+
+  async login(user: any) {
+    const payload = { username: user.username, sub: user.id, roles: user.roles };
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        roles: user.roles,
+      },
+    };
+  }
+}
+
+// jwt.strategy.ts
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(private configService: ConfigService) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: configService.get<string>('JWT_SECRET'),
+    });
+  }
+
+  async validate(payload: any) {
+    return {
+      id: payload.sub,
+      username: payload.username,
+      roles: payload.roles,
+    };
+  }
+}
+
+// auth.controller.ts
+import { Controller, Post, UseGuards, Request, Body } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from './auth.service';
+
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}
+
+  @UseGuards(AuthGuard('local'))
+  @Post('login')
+  async login(@Request() req) {
+    return this.authService.login(req.user);
+  }
+}</code></pre>
+                    <div class="mt-3">
+                        <p><strong>Descrição:</strong> Este exemplo avançado demonstra a implementação de autenticação JWT em NestJS, incluindo módulo de autenticação, serviço, estratégias de autenticação e controlador.</p>
+                        <button class="btn btn-sm btn-primary copy-code" data-target="nestjs-advanced">Copiar Código</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Code Context -->
+        <div class="card mt-5">
+            <div class="card-body">
+                <h3 class="mb-3">Sobre os Exemplos de Código</h3>
+                <div id="code-context" class="mb-4">
+                    <p>Nossos exemplos de código são organizados por tecnologia e nível de dificuldade para facilitar seu aprendizado e referência. Cada exemplo inclui o código-fonte e uma breve descrição de sua funcionalidade.</p>
+                </div>
+                
+                <div id="basic-context">
+                    <h4>Nível Básico</h4>
+                    <p>Estes exemplos introduzem os conceitos fundamentais da tecnologia, focando em:</p>
+                    <ul>
+                        <li>Sintaxe básica e estruturas de controle</li>
+                        <li>Inicialização e configuração</li>
+                        <li>Componentes e módulos essenciais</li>
+                        <li>Padrões básicos de uso</li>
+                    </ul>
+                    <p>Ideal para desenvolvedores iniciando com a tecnologia ou que desejam revisar os fundamentos.</p>
+                </div>
+                
+                <div id="intermediate-context" class="mt-4">
+                    <h4>Nível Intermediário</h4>
+                    <p>Estes exemplos exploram conceitos mais avançados e padrões de implementação, incluindo:</p>
+                    <ul>
+                        <li>Organização de código e modularização</li>
+                        <li>Padrões de design comuns</li>
+                        <li>Integração com outras tecnologias</li>
+                        <li>Manipulação de dados e estado</li>
+                        <li>Middleware e hooks</li>
+                    </ul>
+                    <p>Adequado para desenvolvedores que já dominam os fundamentos e desejam expandir suas habilidades.</p>
+                </div>
+                
+                <div id="advanced-context" class="mt-4">
+                    <h4>Nível Avançado</h4>
+                    <p>Estes exemplos demonstram técnicas sofisticadas e arquiteturas complexas, abrangendo:</p>
+                    <ul>
+                        <li>Arquitetura escalável e padrões avançados</li>
+                        <li>Otimização de performance</li>
+                        <li>Gerenciamento de estado complexo</li>
+                        <li>Implementações de segurança</li>
+                        <li>Técnicas de teste avançadas</li>
+                        <li>Integração com sistemas distribuídos</li>
+                    </ul>
+                    <p>Projetado para desenvolvedores experientes que buscam aprofundar seu conhecimento técnico.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Best Practices Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Melhores Práticas de Código</h2>
+            <p>Princípios essenciais para escrever código de qualidade</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-broom mr-2 text-primary"></i> Clareza e Legibilidade</h3>
+                    <p>Código claro é mais importante que código engenhoso. Escreva pensando em quem vai ler depois.</p>
+                    <ul class="mt-3">
+                        <li>Use nomes descritivos</li>
+                        <li>Mantenha funções pequenas e focadas</li>
+                        <li>Comente quando necessário, mas prefira código autoexplicativo</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-recycle mr-2 text-primary"></i> DRY (Don't Repeat Yourself)</h3>
+                    <p>Evite duplicação de código. Cada conceito deve ter uma representação única no sistema.</p>
+                    <ul class="mt-3">
+                        <li>Extraia código duplicado em funções</li>
+                        <li>Use abstração para unificar conceitos similares</li>
+                        <li>Crie utilitários para operações comuns</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-sitemap mr-2 text-primary"></i> Separação de Responsabilidades</h3>
+                    <p>Cada componente deve ter uma única responsabilidade bem definida.</p>
+                    <ul class="mt-3">
+                        <li>Aplique o princípio da responsabilidade única</li>
+                        <li>Separe lógica de negócio da interface</li>
+                        <li>Crie camadas com responsabilidades distintas</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-vial mr-2 text-primary"></i> Teste Sempre</h3>
+                    <p>Código bem testado é mais confiável e mais fácil de refatorar.</p>
+                    <ul class="mt-3">
+                        <li>Escreva testes unitários para funções críticas</li>
+                        <li>Considere TDD (Test-Driven Development)</li>
+                        <li>Automatize testes para garantir qualidade contínua</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-lock mr-2 text-primary"></i> Segurança por Design</h3>
+                    <p>Pense em segurança desde o início, não como um adendo.</p>
+                    <ul class="mt-3">
+                        <li>Valide todas as entradas</li>
+                        <li>Use práticas seguras de autenticação e autorização</li>
+                        <li>Proteja-se contra vulnerabilidades comuns (OWASP)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-tachometer-alt mr-2 text-primary"></i> Otimização Ponderada</h3>
+                    <p>Otimize quando necessário, após ter código funcional e limpo.</p>
+                    <ul class="mt-3">
+                        <li>Primeiro faça funcionar, depois torne rápido</li>
+                        <li>Otimize baseado em métricas, não em suposições</li>
+                        <li>Considere o custo de manutenção vs. ganho de performance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Code Resources Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recursos Adicionais</h2>
+            <p>Ferramentas e referências para aprimorar suas habilidades de codificação</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Guias de Estilo</h3>
+                    <p>Convenções e padrões de codificação para diferentes linguagens e frameworks.</p>
+                    <ul class="mt-3 text-left">
+                        <li><a href="https://github.com/airbnb/javascript" target="_blank">Airbnb JavaScript Style Guide</a></li>
+                        <li><a href="https://google.github.io/styleguide/jsguide.html" target="_blank">Google JavaScript Style Guide</a></li>
+                        <li><a href="https://www.python.org/dev/peps/pep-0008/" target="_blank">PEP 8 (Python)</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <h3>Ferramentas de Desenvolvimento</h3>
+                    <p>IDEs, linters, formatadores e outras ferramentas para aumentar sua produtividade.</p>
+                    <ul class="mt-3 text-left">
+                        <li><a href="https://eslint.org/" target="_blank">ESLint (JavaScript)</a></li>
+                        <li><a href="https://prettier.io/" target="_blank">Prettier (Formatação)</a></li>
+                        <li><a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Padrões de Design</h3>
+                    <p>Soluções testadas para problemas comuns em desenvolvimento de software.</p>
+                    <ul class="mt-3 text-left">
+                        <li><a href="https://refactoring.guru/design-patterns" target="_blank">Padrões de Design</a></li>
+                        <li><a href="https://12factor.net/" target="_blank">12 Factor App</a></li>
+                        <li><a href="https://www.patterns.dev/" target="_blank">Patterns.dev</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Função para carregar exemplos de código da API
+        function loadCodeExample() {
+            const technology = document.getElementById('tech-selector').value;
+            const level = document.getElementById('level-selector').value;
+            const container = document.getElementById('code-examples-container');
+            
+            container.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i><p>Carregando exemplo...</p></div>';
+            
+            fetch(`/api/code-examples/${technology}/${level}`)
+                .then(response => response.json())
+                .then(data => {
+                    renderCodeExample(data.code, container, technology, level);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar exemplo:', error);
+                    container.innerHTML = `
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="alert alert-danger">
+                                    <p>Erro ao carregar o exemplo de código. Por favor, tente novamente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Função para renderizar exemplos de código
+        function renderCodeExample(code, container, technology, level) {
+            // Definir a classe de badge baseada no nível
+            let badgeClass = 'success';
+            if (level === 'Intermediário') badgeClass = 'warning';
+            if (level === 'Avançado') badgeClass = 'danger';
+            
+            // Definir a linguagem baseada na tecnologia
+            let language = 'JavaScript';
+            if (['NestJS', 'TypeScript'].includes(technology)) language = 'TypeScript';
+            if (['Python', 'Django', 'Flask'].includes(technology)) language = 'Python';
+            
+            const html = `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="flex justify-between align-center">
+                            <h3>Exemplo de ${technology}</h3>
+                            <span class="badge badge-${badgeClass}">${level}</span>
+                        </div>
+                    </div>
+                    <div class="card-body position-relative">
+                        <span class="badge badge-light code-language-badge">${language}</span>
+                        <pre class="code-block"><code>${escapeHtml(code)}</code></pre>
+                        <div class="mt-3">
+                            <p><strong>Descrição:</strong> Este exemplo demonstra conceitos de ${level.toLowerCase()} de ${technology}, incluindo padrões de código e boas práticas.</p>
+                            <button class="btn btn-sm btn-primary copy-code" data-target="dynamic-example">Copiar Código</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Adicionar funcionalidade de copiar código
+            const copyButton = container.querySelector('.copy-code');
+            if (copyButton) {
+                copyButton.addEventListener('click', function() {
+                    navigator.clipboard.writeText(code)
+                        .then(() => {
+                            this.textContent = 'Copiado!';
+                            setTimeout(() => {
+                                this.textContent = 'Copiar Código';
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Erro ao copiar:', err);
+                        });
+                });
+            }
+        }
+        
+        // Função para escapar HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        
+        // Adicionar evento ao botão de carregar exemplo
+        const loadButton = document.getElementById('load-example-btn');
+        if (loadButton) {
+            loadButton.addEventListener('click', loadCodeExample);
+        }
+        
+        // Adicionar funcionalidade de copiar código aos exemplos fixos
+        const copyButtons = document.querySelectorAll('.copy-code');
+        if (copyButtons.length > 0) {
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    let codeText;
+                    
+                    // Obtenha o texto do exemplo apropriado
+                    if (targetId === 'node-basic') {
+                        codeText = document.querySelector('.card:nth-of-type(1) pre code').textContent;
+                    } else if (targetId === 'express-intermediate') {
+                        codeText = document.querySelector('.card:nth-of-type(2) pre code').textContent;
+                    } else if (targetId === 'nestjs-advanced') {
+                        codeText = document.querySelector('.card:nth-of-type(3) pre code').textContent;
+                    } else if (targetId === 'dynamic-example') {
+                        codeText = document.querySelector('#code-examples-container pre code').textContent;
+                    }
+                    
+                    navigator.clipboard.writeText(codeText)
+                        .then(() => {
+                            this.textContent = 'Copiado!';
+                            setTimeout(() => {
+                                this.textContent = 'Copiar Código';
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Erro ao copiar:', err);
+                        });
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

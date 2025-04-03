@@ -1,0 +1,439 @@
+{% extends 'base.html' %}
+
+{% block title %}Vagas - CodeLab{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="section-sm" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Vagas de Tecnologia</h2>
+            <p>Encontre oportunidades de trabalho para diferentes áreas e níveis</p>
+        </div>
+    </div>
+</section>
+
+<!-- Jobs Filter Section -->
+<section class="section">
+    <div class="container">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="mb-3">Filtre Vagas</h3>
+                <form id="jobs-filter-form">
+                    <div class="grid grid-3">
+                        <div class="form-group">
+                            <label class="form-label">Área</label>
+                            <select class="form-select" id="area-filter">
+                                <option value="all">Todas as Áreas</option>
+                                {% for area_name in tech_areas.keys() %}
+                                <option value="{{ area_name }}">{{ area_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Nível</label>
+                            <select class="form-select" id="level-filter">
+                                <option value="all">Todos os Níveis</option>
+                                <option value="Iniciante">Iniciante</option>
+                                <option value="Estagiário">Estagiário</option>
+                                <option value="Junior">Junior</option>
+                                <option value="Pleno">Pleno</option>
+                                <option value="Sênior">Sênior</option>
+                                <option value="Staff">Staff</option>
+                                <option value="Especialista">Especialista</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Modalidade</label>
+                            <select class="form-select" id="type-filter">
+                                <option value="all">Todas as Modalidades</option>
+                                <option value="Presencial">Presencial</option>
+                                <option value="Remoto">Remoto</option>
+                                <option value="Híbrido">Híbrido</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group mt-3">
+                        <label class="form-label">Tecnologias</label>
+                        <div class="grid grid-5">
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-js" name="tech" value="JavaScript">
+                                <label for="tech-js">JavaScript</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-ts" name="tech" value="TypeScript">
+                                <label for="tech-ts">TypeScript</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-react" name="tech" value="React">
+                                <label for="tech-react">React</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-node" name="tech" value="Node.js">
+                                <label for="tech-node">Node.js</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-express" name="tech" value="Express">
+                                <label for="tech-express">Express</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-nest" name="tech" value="NestJS">
+                                <label for="tech-nest">NestJS</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-fastify" name="tech" value="Fastify">
+                                <label for="tech-fastify">Fastify</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-angular" name="tech" value="Angular">
+                                <label for="tech-angular">Angular</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-vue" name="tech" value="Vue.js">
+                                <label for="tech-vue">Vue.js</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="tech-python" name="tech" value="Python">
+                                <label for="tech-python">Python</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mt-3">Filtrar Vagas</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Jobs List -->
+        <div id="jobs-list">
+            <!-- Backend Jobs -->
+            <h3 class="mb-3">Backend</h3>
+            <div class="grid grid-1">
+                <!-- Job Card -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="badge badge-primary mb-2">Backend</span>
+                                <span class="badge badge-light mb-2">Sênior</span>
+                                <span class="badge badge-warning mb-2">Híbrido</span>
+                                <h3 class="card-title">Engenheiro de Software Backend</h3>
+                                <h4 class="card-subtitle">Fintech Innovations S.A.</h4>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">Ver Vaga</a>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3">Desenvolvedor sênior para arquitetura e implementação de microsserviços. Experiência em sistemas distribuídos e alta disponibilidade.</p>
+                        
+                        <div class="mt-3">
+                            <strong>Localização:</strong> Rio de Janeiro (Híbrido)
+                        </div>
+                        
+                        <div class="mt-2">
+                            <strong>Tecnologias:</strong> 
+                            <span class="badge badge-light">Java</span>
+                            <span class="badge badge-light">Spring</span>
+                            <span class="badge badge-light">Kubernetes</span>
+                            <span class="badge badge-light">PostgreSQL</span>
+                            <span class="badge badge-light">Kafka</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Frontend Jobs -->
+            <h3 class="mt-5 mb-3">Frontend</h3>
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="badge badge-primary mb-2">Frontend</span>
+                                <span class="badge badge-light mb-2">Pleno</span>
+                                <span class="badge badge-success mb-2">Remoto</span>
+                                <h3 class="card-title">Desenvolvedor Frontend React</h3>
+                                <h4 class="card-subtitle">Digital Experience Co.</h4>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">Ver Vaga</a>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3">Desenvolvedor React para criar interfaces modernas e responsivas. Experiência com componentes reutilizáveis e gerenciamento de estado.</p>
+                        
+                        <div class="mt-3">
+                            <strong>Localização:</strong> Remoto (Brasil)
+                        </div>
+                        
+                        <div class="mt-2">
+                            <strong>Tecnologias:</strong> 
+                            <span class="badge badge-light">React</span>
+                            <span class="badge badge-light">TypeScript</span>
+                            <span class="badge badge-light">Redux</span>
+                            <span class="badge badge-light">Styled Components</span>
+                            <span class="badge badge-light">Jest</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="badge badge-primary mb-2">Frontend</span>
+                                <span class="badge badge-light mb-2">Junior</span>
+                                <span class="badge badge-danger mb-2">Presencial</span>
+                                <h3 class="card-title">Desenvolvedor Frontend Angular</h3>
+                                <h4 class="card-subtitle">Enterprise Solutions Ltd.</h4>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">Ver Vaga</a>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3">Desenvolvedor Angular para aplicações corporativas complexas. Conhecimento em RxJS e Angular Material.</p>
+                        
+                        <div class="mt-3">
+                            <strong>Localização:</strong> São Paulo (Presencial)
+                        </div>
+                        
+                        <div class="mt-2">
+                            <strong>Tecnologias:</strong> 
+                            <span class="badge badge-light">Angular</span>
+                            <span class="badge badge-light">TypeScript</span>
+                            <span class="badge badge-light">RxJS</span>
+                            <span class="badge badge-light">SCSS</span>
+                            <span class="badge badge-light">Jasmine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FullStack Jobs -->
+            <h3 class="mt-5 mb-3">FullStack</h3>
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="badge badge-primary mb-2">FullStack</span>
+                                <span class="badge badge-light mb-2">Pleno/Sênior</span>
+                                <span class="badge badge-success mb-2">Remoto</span>
+                                <h3 class="card-title">Desenvolvedor Fullstack JavaScript</h3>
+                                <h4 class="card-subtitle">Startup Innovate Tech</h4>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">Ver Vaga</a>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3">Desenvolvedor Fullstack para trabalhar com stack JavaScript moderna. Experiência em React, Node.js e bancos de dados NoSQL.</p>
+                        
+                        <div class="mt-3">
+                            <strong>Localização:</strong> Remoto (América Latina)
+                        </div>
+                        
+                        <div class="mt-2">
+                            <strong>Tecnologias:</strong> 
+                            <span class="badge badge-light">React</span>
+                            <span class="badge badge-light">Node.js</span>
+                            <span class="badge badge-light">Express</span>
+                            <span class="badge badge-light">MongoDB</span>
+                            <span class="badge badge-light">AWS</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="badge badge-primary mb-2">FullStack</span>
+                                <span class="badge badge-light mb-2">Sênior</span>
+                                <span class="badge badge-warning mb-2">Híbrido</span>
+                                <h3 class="card-title">Engenheiro Fullstack TypeScript</h3>
+                                <h4 class="card-subtitle">Global Tech Solutions</h4>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">Ver Vaga</a>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3">Engenheiro Fullstack para desenvolvimento e arquitetura de aplicações escaláveis. Experiência em NestJS, Next.js e bancos de dados SQL.</p>
+                        
+                        <div class="mt-3">
+                            <strong>Localização:</strong> Campinas (Híbrido)
+                        </div>
+                        
+                        <div class="mt-2">
+                            <strong>Tecnologias:</strong> 
+                            <span class="badge badge-light">TypeScript</span>
+                            <span class="badge badge-light">NestJS</span>
+                            <span class="badge badge-light">Next.js</span>
+                            <span class="badge badge-light">PostgreSQL</span>
+                            <span class="badge badge-light">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DevOps Jobs -->
+            <h3 class="mt-5 mb-3">DevOps</h3>
+            <div class="grid grid-1">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="badge badge-primary mb-2">DevOps</span>
+                                <span class="badge badge-light mb-2">Sênior</span>
+                                <span class="badge badge-success mb-2">Remoto</span>
+                                <h3 class="card-title">Engenheiro DevOps</h3>
+                                <h4 class="card-subtitle">Cloud Systems Inc.</h4>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">Ver Vaga</a>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3">Engenheiro DevOps para implementação e manutenção de infraestrutura como código. Experiência em AWS, Kubernetes e CI/CD.</p>
+                        
+                        <div class="mt-3">
+                            <strong>Localização:</strong> Remoto (Brasil)
+                        </div>
+                        
+                        <div class="mt-2">
+                            <strong>Tecnologias:</strong> 
+                            <span class="badge badge-light">AWS</span>
+                            <span class="badge badge-light">Kubernetes</span>
+                            <span class="badge badge-light">Terraform</span>
+                            <span class="badge badge-light">GitHub Actions</span>
+                            <span class="badge badge-light">Prometheus</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Career Resources Section -->
+<section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recursos para Carreira</h2>
+            <p>Ferramentas e dicas para impulsionar sua carreira em tecnologia</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-file-alt mr-2 text-primary"></i> Modelos de Currículo</h3>
+                    <p>Modelos otimizados para diferentes áreas e níveis de experiência em tecnologia.</p>
+                    <ul class="mt-3">
+                        <li>Destaque suas habilidades técnicas</li>
+                        <li>Inclua projetos relevantes</li>
+                        <li>Otimizado para ATS</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary mt-3">Ver Modelos</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-chalkboard-teacher mr-2 text-primary"></i> Preparação para Entrevistas</h3>
+                    <p>Recursos para se preparar para entrevistas técnicas e comportamentais.</p>
+                    <ul class="mt-3">
+                        <li>Desafios de código comuns</li>
+                        <li>Perguntas técnicas por área</li>
+                        <li>Simulações de entrevista</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary mt-3">Prepare-se</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-briefcase mr-2 text-primary"></i> Desenvolvimento de Carreira</h3>
+                    <p>Planejamento e estratégias para evolução na carreira de tecnologia.</p>
+                    <ul class="mt-3">
+                        <li>Planejamento de carreira</li>
+                        <li>Negociação salarial</li>
+                        <li>Networking estratégico</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary mt-3">Desenvolver Carreira</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Salary Guide Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Guia Salarial</h2>
+            <p>Referências salariais para diferentes áreas e níveis de experiência</p>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Área</th>
+                        <th>Junior</th>
+                        <th>Pleno</th>
+                        <th>Sênior</th>
+                        <th>Staff/Especialista</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Backend</strong></td>
+                        <td>R$ 3.000 - R$ 5.000</td>
+                        <td>R$ 5.000 - R$ 9.000</td>
+                        <td>R$ 9.000 - R$ 16.000</td>
+                        <td>R$ 16.000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frontend</strong></td>
+                        <td>R$ 3.000 - R$ 5.500</td>
+                        <td>R$ 5.500 - R$ 9.500</td>
+                        <td>R$ 9.500 - R$ 15.000</td>
+                        <td>R$ 15.000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FullStack</strong></td>
+                        <td>R$ 3.500 - R$ 6.000</td>
+                        <td>R$ 6.000 - R$ 10.000</td>
+                        <td>R$ 10.000 - R$ 18.000</td>
+                        <td>R$ 18.000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DevOps</strong></td>
+                        <td>R$ 4.000 - R$ 7.000</td>
+                        <td>R$ 7.000 - R$ 12.000</td>
+                        <td>R$ 12.000 - R$ 20.000</td>
+                        <td>R$ 20.000+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Science</strong></td>
+                        <td>R$ 4.000 - R$ 7.500</td>
+                        <td>R$ 7.500 - R$ 13.000</td>
+                        <td>R$ 13.000 - R$ 22.000</td>
+                        <td>R$ 22.000+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="alert alert-info mt-4">
+            <p><strong>Nota:</strong> Os valores são referências aproximadas baseadas no mercado brasileiro e podem variar de acordo com a região, porte da empresa, setor e outras variáveis.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
